@@ -6,62 +6,30 @@ function BurgerConstructor({ingredients}) {
   const {name, price, image_mobile} = ingredients
   return (
     <section>
-      <ul className={`${burgerConstructorStyles.list} mt-25 pr-4 pl-4`}>
-        <li className={`${burgerConstructorStyles.element} pl-8`}>
-          <ConstructorElement
-            text={`${name} (верх)`}
-            thumbnail={image_mobile}
-            price={price}
-            type="top"
-            isLocked={true}
-          />
-        </li>
-        <li className={burgerConstructorStyles.element}>
-          <DragIcon />
-          <ConstructorElement
-            text={name}
-            thumbnail={image_mobile}
-            price={price}
-            isLocked={false}
-          />
-        </li>
-        <li className={burgerConstructorStyles.element}>
-          <DragIcon />
-          <ConstructorElement
-            text={name}
-            thumbnail={image_mobile}
-            price={price}
-            isLocked={false}
-          />
-        </li>
-        <li className={burgerConstructorStyles.element}>
-          <DragIcon />
-          <ConstructorElement
-            text={name}
-            thumbnail={image_mobile}
-            price={price}
-            isLocked={false}
-          />
-        </li>
-        <li className={burgerConstructorStyles.element}>
-          <DragIcon />
-          <ConstructorElement
-            text={name}
-            thumbnail={image_mobile}
-            price={price}
-            isLocked={false}
-          />
-        </li>
-        <li className={burgerConstructorStyles.element}>
-         <DragIcon />
-         <ConstructorElement
-            text={name}
-            thumbnail={image_mobile}
-            price={price}
-            isLocked={false}
-          />
-        </li>
-        <li className={`${burgerConstructorStyles.element} pl-8`}>
+      <ul className={`${burgerConstructorStyles.list} mt-25`}>
+        <li className={`${burgerConstructorStyles.element} pl-8 pr-4`}>
+           <ConstructorElement
+             text={`${name} (верх)`}
+             thumbnail={image_mobile}
+             price={price}
+             type="top"
+             isLocked={true}
+            />
+            </li>
+        <ul className={`${burgerConstructorStyles.list_list}`}>
+        {ingredients.map((ingredient) => ingredient.type === 'main' &&
+          <li key={ingredient._id} className={`${burgerConstructorStyles.element} pl-4 pr-4`}>
+            <DragIcon />
+            <ConstructorElement
+              text={ingredient.name}
+              thumbnail={ingredient.image_mobile}
+              price={ingredient.price}
+              isLocked={false}
+            />
+          </li>
+        )}
+        </ul>
+        <li className={`${burgerConstructorStyles.element} pl-8 pr-4`}>
           <ConstructorElement
             text={`${name} (низ)`}
             thumbnail={image_mobile}
@@ -81,12 +49,11 @@ function BurgerConstructor({ingredients}) {
         </Button>
       </div>
     </section>
-
   )
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.object.isRequired,
+  ingredients: PropTypes.array.isRequired,
 }
 
 export default BurgerConstructor;

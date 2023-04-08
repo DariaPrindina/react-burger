@@ -2,8 +2,8 @@ import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-com
 import ingredientStyles from './ingredient.module.css'
 import PropTypes from "prop-types";
 
-const Ingredient = ({ingredients}) => {
-  const {name, price, image} = ingredients
+const Ingredient = ({ingredient}) => {
+  const {name, price, image} = ingredient
   return(
     <div className={ingredientStyles.container_ingredient}>
       <div className='pl-4 pr-4'>
@@ -24,7 +24,7 @@ const Ingredient = ({ingredients}) => {
 }
 
 Ingredient.propTypes = {
-  ingredients: PropTypes.object.isRequired,
+  ingredient: PropTypes.object.isRequired,
 }
 
 export default Ingredient

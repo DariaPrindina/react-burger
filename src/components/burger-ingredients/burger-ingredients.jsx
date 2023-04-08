@@ -27,7 +27,7 @@ function BurgerIngredients({ingredients}) {
         <ul className={`${burgerIngredientsStyles.ingredients_list} ml-4 mr-4`}>
           {ingredients.map((ingredient) => ingredient.type === 'bun' && 
             <li key={ingredient._id}>
-              <Ingredient key={ingredients._id} ingredients={ingredient} />
+              <Ingredient key={ingredients._id} ingredient={ingredient} />
             </li>
           )}
         </ul>
@@ -35,7 +35,7 @@ function BurgerIngredients({ingredients}) {
         <ul className={`${burgerIngredientsStyles.ingredients_list} ml-4 mr-4`}>
           {ingredients.map((ingredient) => ingredient.type === 'sauce' && 
             <li key={ingredient._id}>
-              <Ingredient key={ingredients._id} ingredients={ingredient} />
+              <Ingredient key={ingredients._id} ingredient={ingredient} />
             </li>
           )}
         </ul>
@@ -43,7 +43,7 @@ function BurgerIngredients({ingredients}) {
         <ul className={`${burgerIngredientsStyles.ingredients_list} ml-4 mr-4`}>
           {ingredients.map((ingredient) => ingredient.type === 'main' && 
             <li key={ingredient._id}>
-              <Ingredient key={ingredients._id} ingredients={ingredient} />
+              <Ingredient key={ingredients._id} ingredient={ingredient} />
             </li>
           )}
         </ul>
@@ -56,7 +56,7 @@ function BurgerIngredients({ingredients}) {
 }
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.object.isRequired,
+  ingredients: PropTypes.array.isRequired,
 }
 
 export default BurgerIngredients;

@@ -16,9 +16,18 @@
   gap: 10px;
   list-style: none;
   max-height: 656px;
+  padding: 0;
+}
+
+.list_list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+  max-height: 464px;
   overflow-y: scroll;
   overflow-x: hidden;
-  
+  padding: 0;
 }
 
 .element {
@@ -28,17 +37,17 @@
   justify-content: flex-end;
 }
 
-.list::-webkit-scrollbar {
+.list_list::-webkit-scrollbar {
   width: 8px;
   height: 464px;
   background-color: rgba(47, 47, 55, 2);
 }
 
-.list::-webkit-scrollbar-thumb {
+.list_list::-webkit-scrollbar-thumb {
   height: 292px;
   background-color: rgba(133, 133, 173, 1);
 }
 
-.list::-webkit-scrollbar-thumb:hover {
+.list_list::-webkit-scrollbar-thumb:hover {
   background-color: rgb(99, 99, 128);
 }
