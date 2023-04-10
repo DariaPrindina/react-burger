@@ -5,10 +5,10 @@ import {ingredientsData} from '../../utils/data'
 
 function Main() {
   return (
-    <div className={mainStyles.main}>
+    <main className={mainStyles.main}>
       <BurgerIngredients ingredients={ingredientsData}/>
       <BurgerConstructor ingredients={ingredientsData}/>
-    </div>
+    </main>
   )
 }
 
