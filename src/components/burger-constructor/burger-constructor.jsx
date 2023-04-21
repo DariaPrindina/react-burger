@@ -2,7 +2,7 @@ import {ConstructorElement, CurrencyIcon, Button, DragIcon} from '@ya.praktikum/
 import burgerConstructorStyles from './burger-constructor.module.css'
 import PropTypes from "prop-types";
 
-function BurgerConstructor({ingredients}) {
+function BurgerConstructor(ingredients) {
   const {name, price, image_mobile} = ingredients
   return (
     <section>
@@ -17,7 +17,7 @@ function BurgerConstructor({ingredients}) {
             />
             </li>
         <ul className={`${burgerConstructorStyles.list_list}`}>
-        {ingredients.map((ingredient) => ingredient.type === 'main' &&
+        {ingredients && ingredients.map((ingredient) => ingredient.type === 'main' &&
           <li key={ingredient._id} className={`${burgerConstructorStyles.element} pl-4 pr-4`}>
             <DragIcon />
             <ConstructorElement

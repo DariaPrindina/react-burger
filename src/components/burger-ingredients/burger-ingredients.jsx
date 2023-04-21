@@ -4,7 +4,7 @@ import burgerIngredientsStyles from './burger-ingredients.module.css'
 import Ingredient from '../ingredient/ingredient';
 import PropTypes from "prop-types";
 
-function BurgerIngredients({ingredients}) {
+function BurgerIngredients(ingredients) {
   const [current, setCurrent] = React.useState('bun')
   return (
     <section className={burgerIngredientsStyles.main_container}>
@@ -25,25 +25,25 @@ function BurgerIngredients({ingredients}) {
       <div className={`${burgerIngredientsStyles.ingredients_container} pt-10`}>
         <h2 style={{margin: 0}} className='text text_type_main-medium'>Булки</h2>
         <ul className={`${burgerIngredientsStyles.ingredients_list} ml-4 mr-4`}>
-          {ingredients.map((ingredient) => ingredient.type === 'bun' && 
+          {ingredients && ingredients.map((ingredient) => ingredient.type === 'bun' && 
             <li key={ingredient._id}>
-              <Ingredient key={ingredients._id} ingredient={ingredient} />
+              <Ingredient key={ingredient._id} ingredient={ingredients} />
             </li>
           )}
         </ul>
         <h2 style={{margin: 0}} className='text text_type_main-medium'>Соусы</h2>
         <ul className={`${burgerIngredientsStyles.ingredients_list} ml-4 mr-4`}>
-          {ingredients.map((ingredient) => ingredient.type === 'sauce' && 
+          {ingredients && ingredients.map((ingredient) => ingredient.type === 'sauce' && 
             <li key={ingredient._id}>
-              <Ingredient key={ingredients._id} ingredient={ingredient} />
+              <Ingredient key={ingredient._id} ingredient={ingredient} />
             </li>
           )}
         </ul>
         <h2 style={{margin: 0}} className='text text_type_main-medium'>Начинки</h2>
         <ul className={`${burgerIngredientsStyles.ingredients_list} ml-4 mr-4`}>
-          {ingredients.map((ingredient) => ingredient.type === 'main' && 
+          {ingredients && ingredients.map((ingredient) => ingredient.type === 'main' && 
             <li key={ingredient._id}>
-              <Ingredient key={ingredients._id} ingredient={ingredient} />
+              <Ingredient key={ingredient._id} ingredient={ingredient} />
             </li>
           )}
         </ul>
