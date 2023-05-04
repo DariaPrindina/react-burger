@@ -2,10 +2,14 @@ import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-com
 import ingredientStyles from './ingredient.module.css'
 import PropTypes from "prop-types";
 
-const Ingredient = ({ingredient}) => {
+const Ingredient = ({ingredient, openModal}) => {
   const {name, price, image} = ingredient
+  const clickIngr = () => {
+    openModal(ingredient)
+  }
+
   return(
-    <div className={ingredientStyles.container_ingredient}>
+    <div className={ingredientStyles.container_ingredient} onClick={clickIngr}>
       <div className='pl-4 pr-4'>
         <img src={image} alt={name} />
       </div>
@@ -25,6 +29,7 @@ const Ingredient = ({ingredient}) => {
 
 Ingredient.propTypes = {
   ingredient: PropTypes.object.isRequired,
+  openModal: PropTypes.func.isRequired
 }
 
 export default Ingredient

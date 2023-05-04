@@ -1,17 +1,26 @@
+import React, {useState} from 'react'
 import {ConstructorElement, CurrencyIcon, Button, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.css'
 import PropTypes from "prop-types";
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details'
 
-function BurgerConstructor(ingredients) {
-  const {name, price, image_mobile} = ingredients
+const BurgerConstructor = ({ingredients, buns}) => {
+  const [modal, setModal] = useState(null)
+
+  const closeModal = () => {
+    setModal(null)
+  }
+
   return (
+    <>
     <section>
       <ul className={`${burgerConstructorStyles.list} mt-25`}>
         <li className={`${burgerConstructorStyles.element} pl-8 pr-4`}>
            <ConstructorElement
-             text={`${name} (верх)`}
-             thumbnail={image_mobile}
-             price={price}
+             text={`${buns?.name} (верх)`}
+             thumbnail={buns?.image_mobile}
+             price={buns?.price}
              type="top"
              isLocked={true}
             />
@@ -31,9 +40,9 @@ function BurgerConstructor(ingredients) {
         </ul>
         <li className={`${burgerConstructorStyles.element} pl-8 pr-4`}>
           <ConstructorElement
-            text={`${name} (низ)`}
-            thumbnail={image_mobile}
-            price={price}
+            text={`${buns?.name} (низ)`}
+            thumbnail={buns?.image_mobile}
+            price={buns?.price}
             type="bottom"
             isLocked={true}
           />
@@ -44,16 +53,23 @@ function BurgerConstructor(ingredients) {
           <span className="text text_type_digits-medium">9328</span>
           <CurrencyIcon />  
         </div>
-        <Button htmlType="button" type="primary" size="large">
+        <Button htmlType="button" type="primary" size="large" onClick={setModal}>
           Оформить заказ
         </Button>
       </div>
     </section>
+    {modal &&
+      <Modal  handleClose={closeModal}>
+        <OrderDetails/>
+      </Modal>  
+    }
+    </>
   )
 }
 
 BurgerConstructor.propTypes = {
   ingredients: PropTypes.array.isRequired,
+  buns: PropTypes.object
 }
 
 export default BurgerConstructor;
