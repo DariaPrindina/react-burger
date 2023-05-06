@@ -7,7 +7,7 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 const BurgerIngredients = ({ingredients}) => {
-  const [current, setCurrent] = useState('bun')
+  const [current, setCurrent] = useState('bun');
   const [modal, setModal] = useState(null)
 
   const handleTabClick = (tab) => {
@@ -63,7 +63,7 @@ const BurgerIngredients = ({ingredients}) => {
         </ul>
       </div>
     </section>
-    {modal &&
+    {modal && 
       <Modal  handleClose={closeModal} title='Детали ингредиента'>
         <IngredientDetails ingredient={modal}/>
       </Modal>  

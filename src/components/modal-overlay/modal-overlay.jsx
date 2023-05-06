@@ -1,15 +1,15 @@
 import overlayStyles from './modal-overlay.module.css'
 import PropTypes from 'prop-types'
 
-const ModalOverlay = ({handleClosebyOverlay}) => {
+const ModalOverlay = ({handleCloseByOverlay}) => {
   return (
-    <div onClick={handleClosebyOverlay} className={overlayStyles.overlay}>
+    <div onClick={handleCloseByOverlay} className={overlayStyles.overlay}>
     </div>
   )
 }
 
 ModalOverlay.propTypes = {
-  handleClosebyOverlay: PropTypes.func,
+  handleCloseByOverlay: PropTypes.func,
 }
 
 export default ModalOverlay;

@@ -21,7 +21,7 @@ const Modal = ({handleClose, title, children}) => {
 
   return ReactDOM.createPortal(
       <>
-      <ModalOverlay handleClosebyOverlay={handleClose} />
+      <ModalOverlay handleCloseByOverlay={handleClose} />
       <div className={modalStyles.modal}>
         <div className={modalStyles.container}>
           <div className={`pl-10 pr-10 pt-10 ${modalStyles.header}`}>

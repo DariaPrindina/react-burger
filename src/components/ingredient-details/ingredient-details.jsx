@@ -6,7 +6,7 @@ const IngredientDetails = ({ingredient}) => {
 
   return (
     <div>
-      <img src={image_large} alt='name'></img>
+      <img src={image_large} alt={name}></img>
       <p className={`text text_type_main-medium mt-4 mb-8 ${ingredientDetailsStyles.title}`}>{name}</p>
       <ul className={ingredientDetailsStyles.inform_list}>
         <li className={ingredientDetailsStyles.list_item}>
@@ -31,12 +31,7 @@ const IngredientDetails = ({ingredient}) => {
 }
 
 IngredientDetails.propTypes = {
-  calories: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  proteins: PropTypes.number.isRequired,
+  ingredient: PropTypes.object.isRequired
 }
 
 export default IngredientDetails;
