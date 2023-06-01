@@ -3,37 +3,31 @@ import appStyles from './app.module.css';
 import AppHeader from '../header/header'
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
-
-const apiUrl = 'https://norma.nomoreparties.space/api/ingredients'
+import { ItemContext } from '../services/ItemContext';
+import { OrderContext } from '../services/orderContext';
+import { getIngredientsData } from '../api/getIngredientsData'
 
 const App = () => {
-  const [ingredientsData, setIngredients] = useState([])
+  const [ingredientsData, setIngredientsData] = useState()
+  const [order, setOrder] = useState({
+    bun: [],
+    otherIngredients: [],
+})
 
   useEffect(() => {
-    const getData = () => {
-      return fetch(apiUrl)
-      .then((res) => {
-        if (res.ok){
-          return res.json();
-        }
-        return Promise.reject(`Ошибка 1: ${res} ${res.status}`)    
-      })
-      .then((res) => {
-      setIngredients(res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    }
-    getData();
+    getIngredientsData(setIngredientsData)
   }, [])
 
   return (
     <div className={appStyles.app}>
       <AppHeader />
       <main className={appStyles.main}>
-        <BurgerIngredients ingredients={ingredientsData}/>
-        <BurgerConstructor ingredients={ingredientsData} buns={ingredientsData[0]}/>
+        <ItemContext.Provider value={ingredientsData}>
+          <OrderContext.Provider value={{order, setOrder}}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </OrderContext.Provider>
+        </ItemContext.Provider>
       </main>
     </div>
   );
