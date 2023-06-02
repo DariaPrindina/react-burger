@@ -8,6 +8,7 @@ import useModal from '../hooks/useModal';
 import { ItemContext } from '../services/ItemContext';
 import { orderPostApi } from '../api/orderPostApi';
 import { OrderContext } from '../services/orderContext';
+import { ingredientPropTypes } from '../utils/prop-types'
 
 const BurgerConstructor = () => {
   const ingredients = useContext(ItemContext)
@@ -43,7 +44,7 @@ const BurgerConstructor = () => {
     const otherIngredientsPrice = otherIngredients?.reduce((prev, ingr) => {
       return prev + ingr.price
     }, 0)
-    return otherIngredientsPrice + bun?.price * 2
+    return otherIngredientsPrice + (bun ? bun.price * 2 : 0)
   }, [bun, otherIngredients])
    
   return (
@@ -109,7 +110,7 @@ const BurgerConstructor = () => {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.object),
+  ingredients: PropTypes.arrayOf(ingredientPropTypes),
   bun: PropTypes.object,
   orderTotalPrice: PropTypes.number
 }

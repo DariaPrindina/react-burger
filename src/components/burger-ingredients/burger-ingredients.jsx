@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { ItemContext } from '../services/ItemContext';
+import { ingredientPropTypes } from '../utils/prop-types'
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState('bun');
@@ -75,7 +76,7 @@ const BurgerIngredients = () => {
 }
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(PropTypes.object),
+  ingredients: PropTypes.arrayOf(ingredientPropTypes),
 }
 
 export default BurgerIngredients;
