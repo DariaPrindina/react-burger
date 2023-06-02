@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useReducer, useMemo } from 'react'
+import React, { useContext, useMemo } from 'react'
 import {ConstructorElement, CurrencyIcon, Button, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.css'
 import PropTypes from 'prop-types';
@@ -11,38 +11,40 @@ import { OrderContext } from '../services/orderContext';
 
 const BurgerConstructor = () => {
   const ingredients = useContext(ItemContext)
-  const { order, setOrder } = useContext(OrderContext)
-  
+  const { setOrder } = useContext(OrderContext)
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  // const [order, setOrder] = useState(null)
-
-  const ingredientsData = useMemo(() => ({
-    'bun': ingredients.filter((ingredient) => ingredient.type === 'bun')[0],
-    'otherIngredients': ingredients.filter((ingredient) => ingredient.type !== 'bun'),
-  }), [ingredients])
-
-  const {bun, otherIngredients} = ingredientsData
+  const bun = useMemo(
+    () => ingredients.find((ingr) => ingr.type === 'bun'),
+    [ingredients]
+  )
   
-  // const idBuns = useMemo(() => ingredients.map(el => el["_id"]), [...ingredients])
-  // const idOtherIngredients = useMemo(() => ingredients.map(el => el["_id"]), [...ingredients])
+  const otherIngredients = useMemo(
+    () => ingredients.filter((ingr) => ingr.type !== 'bun'),
+    [ingredients]
+  )
 
-  const idIngredients = {
-    "ingredients": [
-      order.bun._id,
-      order.otherIngredients.map((ingredient) => {ingredient._id})
-    ]
-  }
+  const idIngredients = useMemo(
+    () => ingredients.map((ingr) => ingr._id),
+    [ingredients]
+  )
 
-  function submitOrder() {
-    openModal();
+
+  const getOrderId = () => {
     orderPostApi(idIngredients, setOrder)
   }
 
-   const orderTotalPrice = useMemo(() => {
-    (order.bun ? (order.bun.price * 2) : 0)
-      + (order.otherIngredients.reduce((prev, ingr) => {prev + ingr.price}, 0))    
-   }, [order]);
+  const submitOrder = () => {
+    getOrderId()
+    openModal();
+  }
+
+  const orderTotalPrice = useMemo(() => {
+    const otherIngredientsPrice = otherIngredients?.reduce((prev, ingr) => {
+      return prev + ingr.price
+    }, 0)
+    return otherIngredientsPrice + bun?.price * 2
+  }, [bun, otherIngredients])
    
   return (
     <>
@@ -87,7 +89,9 @@ const BurgerConstructor = () => {
       </ul>
       <div className={`${burgerConstructorStyles.price_container} mt-10 pr-4`}>
         <div className={`${burgerConstructorStyles.price} mr-10`}>
-          <span className="text text_type_digits-medium">{orderTotalPrice}</span>
+          {orderTotalPrice &&
+            <span className="text text_type_digits-medium">{orderTotalPrice}</span>
+          }
           <CurrencyIcon />  
         </div>
         <Button htmlType="button" type="primary" size="large" onClick={submitOrder}>
@@ -97,7 +101,7 @@ const BurgerConstructor = () => {
     </section>
     {isModalOpen &&
       <Modal  handleClose={closeModal}>
-        <OrderDetails orderNumber={order.order.number}/>
+        <OrderDetails />
       </Modal>  
     }
     </>
@@ -106,7 +110,8 @@ const BurgerConstructor = () => {
 
 BurgerConstructor.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.object),
-  bun: PropTypes.object
+  bun: PropTypes.object,
+  orderTotalPrice: PropTypes.number
 }
 
 export default BurgerConstructor;

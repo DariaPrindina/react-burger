@@ -8,11 +8,9 @@ import { OrderContext } from '../services/orderContext';
 import { getIngredientsData } from '../api/getIngredientsData'
 
 const App = () => {
-  const [ingredientsData, setIngredientsData] = useState()
-  const [order, setOrder] = useState({
-    bun: [],
-    otherIngredients: [],
-})
+  const [ingredientsData, setIngredientsData] = useState([])
+  const [order, setOrder] = useState('')
+  
 
   useEffect(() => {
     getIngredientsData(setIngredientsData)

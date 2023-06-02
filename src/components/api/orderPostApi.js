@@ -1,12 +1,14 @@
 const postApi = 'https://norma.nomoreparties.space/api/orders';
 
 const orderPostApi = (orderIngredients, setOrder) => {
-  fetch(postApi, {
+  return fetch(postApi, {
     method: 'POST',
     headers: {
-      "Content-type": 'application/json'
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(orderIngredients)
+    body: JSON.stringify({
+      "ingredients": orderIngredients
+  })
   })
   .then((res) => {
     if (res.ok){
@@ -15,7 +17,7 @@ const orderPostApi = (orderIngredients, setOrder) => {
     return Promise.reject(`Ошибка 1: ${res} ${res.status}`)    
   })
   .then((res) => {
-    setOrder(res)
+    setOrder(res.order.number.toString())
   })
   .catch((err) => {
     console.log(err)
