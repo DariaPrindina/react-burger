@@ -3,39 +3,48 @@ import appStyles from './app.module.css';
 import AppHeader from '../header/header'
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
-
-const apiUrl = 'https://norma.nomoreparties.space/api/ingredients'
+import { ItemContext } from '../services/ItemContext';
+import { OrderContext } from '../services/orderContext';
+import { getIngredientsData } from '../api/getIngredientsData'
 
 const App = () => {
-  const [ingredientsData, setIngredients] = useState([])
+  const [ingredientsData, setIngredientsData] = useState([])
+  const [order, setOrder] = useState('')
+  const [error, setError] = useState(null)
 
   useEffect(() => {
-    const getData = () => {
-      return fetch(apiUrl)
+    const getIngredients = async () => {
+      await getIngredientsData()
       .then((res) => {
-        if (res.ok){
-          return res.json();
-        }
-        return Promise.reject(`Ошибка 1: ${res} ${res.status}`)    
-      })
-      .then((res) => {
-      setIngredients(res.data)
+        setIngredientsData(res.data)
       })
       .catch((err) => {
         console.log(err)
+        setError(err)
       })
     }
-    getData();
+    getIngredients()
   }, [])
 
   return (
+    error ? (
+      <div className={appStyles.error}>
+        <p className={`${appStyles.text_error} text text_type_main-large`}>{`Упс... Ингредиенты были похищены :(`}</p>
+        <p className={`${appStyles.text_error} text text_type_main-default mt-8`}>Попробуйте перезагрузить страницу</p>
+      </div>
+      ) : (
     <div className={appStyles.app}>
       <AppHeader />
-      <main className={appStyles.main}>
-        <BurgerIngredients ingredients={ingredientsData}/>
-        <BurgerConstructor ingredients={ingredientsData} buns={ingredientsData[0]}/>
-      </main>
+        <main className={appStyles.main}>
+          <ItemContext.Provider value={ingredientsData}>
+            <OrderContext.Provider value={{order, setOrder}}>
+              <BurgerIngredients />
+              <BurgerConstructor />
+            </OrderContext.Provider>
+          </ItemContext.Provider>
+        </main>
     </div>
+    )
   );
 }
 

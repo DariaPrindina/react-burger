@@ -9,3 +9,14 @@
   margin: 0 auto;
   gap: 40px;
 }
+
+.error {
+  Position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}
+
+.text_error {
+  text-align: center;
+}
