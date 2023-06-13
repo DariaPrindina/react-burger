@@ -1,17 +1,20 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
+import { useSelector, useDispatch } from "react-redux";
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerIngredientsStyles from './burger-ingredients.module.css'
 import Ingredient from '../ingredient/ingredient';
 import PropTypes from "prop-types";
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import { ItemContext } from '../services/ItemContext';
-import { ingredientPropTypes } from '../utils/prop-types'
+import { ingredientPropTypes } from '../../utils/prop-types'
+import { popupDeleteIngredient } from '../../services/actions/ingredients';
+import { togglePopupIngredient } from '../../services/actions/popup';
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState('bun');
-  const [modal, setModal] = useState(null)
-  const ingredients = useContext(ItemContext)
+  const ingredients = useSelector(store => store.ingredientsReducer.ingredients)
+  const isModalIngredientOpen = useSelector(store => store.popupReducer.popupIngredientOpen)
+  const dispatch = useDispatch()
 
   const handleTabClick = (tab) => {
     setCurrent(tab)
@@ -19,7 +22,8 @@ const BurgerIngredients = () => {
   }
 
   const closeModal = () => {
-    setModal(null)
+    dispatch(togglePopupIngredient(false))
+    dispatch(popupDeleteIngredient())
   }
 
   return (
@@ -44,7 +48,7 @@ const BurgerIngredients = () => {
         <ul className={`${burgerIngredientsStyles.ingredients_list} ml-4 mr-4 mt-6 mb-5`}>
           {ingredients && ingredients.map((ingredient) => ingredient.type === 'bun' && 
             <li key={ingredient._id}>
-              <Ingredient key={ingredient._id} ingredient={ingredient} openModal={setModal} />
+              <Ingredient key={ingredient._id} ingredient={ingredient} />
             </li>
           )}
         </ul>
@@ -52,7 +56,7 @@ const BurgerIngredients = () => {
         <ul className={`${burgerIngredientsStyles.ingredients_list} ml-4 mr-4 mt-6 mb-5`}>
           {ingredients && ingredients.map((ingredient) => ingredient.type === 'sauce' && 
             <li key={ingredient._id}>
-              <Ingredient key={ingredient._id} ingredient={ingredient} openModal={setModal}/>
+              <Ingredient key={ingredient._id} ingredient={ingredient} />
             </li>
           )}
         </ul>
@@ -60,15 +64,15 @@ const BurgerIngredients = () => {
         <ul className={`${burgerIngredientsStyles.ingredients_list} ml-4 mr-4 mt-6 mb-5`}>
           {ingredients && ingredients.map((ingredient) => ingredient.type === 'main' && 
             <li key={ingredient._id}>
-              <Ingredient key={ingredient._id} ingredient={ingredient} openModal={setModal}/>
+              <Ingredient key={ingredient._id} ingredient={ingredient} />
             </li>
           )}
         </ul>
       </div>
     </section>
-    {modal && 
-      <Modal  handleClose={closeModal} title='Детали ингредиента'>
-        <IngredientDetails ingredient={modal}/>
+    {isModalIngredientOpen && 
+      <Modal handleClose={closeModal} title='Детали ингредиента'>
+        <IngredientDetails />
       </Modal>  
     }
     </>

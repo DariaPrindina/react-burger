@@ -1,4 +1,6 @@
 import React, { useContext, useMemo } from 'react'
+import { useDrop } from "react-dnd";
+import { useDispatch, useSelector } from 'react-redux';
 import {ConstructorElement, CurrencyIcon, Button, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.css'
 import PropTypes from 'prop-types';
@@ -6,14 +8,22 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details'
 import useModal from '../hooks/useModal';
 import { ItemContext } from '../services/ItemContext';
-import { orderPostApi } from '../api/orderPostApi';
+import { orderPostApi } from '../../services/api/orderPostApi';
 import { OrderContext } from '../services/orderContext';
-import { ingredientPropTypes } from '../utils/prop-types'
+import { ingredientPropTypes } from '../../utils/prop-types'
 
 const BurgerConstructor = () => {
   const ingredients = useContext(ItemContext)
   const { setOrder } = useContext(OrderContext)
   const { isModalOpen, openModal, closeModal } = useModal();
+  const dispatch = useDispatch();
+
+  const [{isHover}, dropTarget] = useDrop({
+    accept: 'items',
+    collect: monitor => ({
+      isHover: monitor.isOver()
+    })
+  })
 
   const bun = useMemo(
     () => ingredients.find((ingr) => ingr.type === 'bun'),
@@ -50,7 +60,7 @@ const BurgerConstructor = () => {
   return (
     <>
     <section>
-      <ul className={`${burgerConstructorStyles.list} mt-25`}>
+      <ul ref={dropTarget} className={`${burgerConstructorStyles.list} mt-25 ${isHover ? 'onHover' : ''}`}>
         {bun && 
           <li className={`${burgerConstructorStyles.element} pl-8 pr-4`}>
              <ConstructorElement

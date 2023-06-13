@@ -37,6 +37,10 @@
   justify-content: flex-end;
 }
 
+.onHover {
+  box-shadow: inset 0px -2px 0px #3C39EC;
+}
+
 .list_list::-webkit-scrollbar {
   width: 8px;
   height: 464px;
