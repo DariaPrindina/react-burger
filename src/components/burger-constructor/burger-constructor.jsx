@@ -27,6 +27,7 @@ const BurgerConstructor = () => {
       dispatch({
         type: ADD_CONSTRUCTOR_BUN,
         bun: ingr,
+        key: ingr.id,
       })
       :
       dispatch({
@@ -45,19 +46,22 @@ const BurgerConstructor = () => {
     })
   })
 
-  // const bun = useMemo(
-  //   () => ingredients?.find((ingr) => ingr.type === 'bun'),
-  //   [ingredients]
-  // )
-  const bun = ingredients.bun
-  // const otherIngredients = useMemo(
-  //   () => ingredients?.filter((ingr) => ingr.type !== 'bun'),
-  //   [ingredients]
-  // )
-  const otherIngredients = ingredients.otherIngredients
+  const bun = useMemo(
+    () => [ingredients]?.find((ingr) => ingr.type === 'bun'),
+    [ingredients]
+  )
 
+  console.log(ingredients)
+
+  const otherIngredients = useMemo(
+    () => [ingredients]?.filter((ingr) => ingr.type !== 'bun'),
+    [ingredients]
+  )
+  // const otherIngredients = ingredients.otherIngredients
+
+  
   const idIngredients = useMemo(
-    () => ingredients.map((ingr) => ingr._id.toString()),
+    () => [ingredients].map((ingr) => ingr._id).toString(),
     [ingredients]
   )
 
@@ -90,7 +94,7 @@ const BurgerConstructor = () => {
         {ingredients && 
           <>
             {bun ? 
-                <li className={`${burgerConstructorStyles.element} pl-8 pr-4`}>
+                <li key={bun._id} className={`${burgerConstructorStyles.element} pl-8 pr-4`}>
                    <ConstructorElement
                      text={`${bun?.name} (верх)`}
                      thumbnail={bun?.image_mobile}
@@ -100,9 +104,11 @@ const BurgerConstructor = () => {
                     />
                 </li>
                 : 
-                <p className="text text_type_main-large">Выберите ингредиенты</p>}
+                <div>
+                <p className="text text_type_main-large">Выберите ингредиенты</p>
+                </div>}
             <ul className={`${burgerConstructorStyles.list_list}`}>
-            {otherIngredients.map((ingredient) => (
+            {otherIngredients && otherIngredients.map((ingredient) => (
               <li key={ingredient._id} className={`${burgerConstructorStyles.element} pl-4 pr-4`}>
                 <DragIcon />
                 <ConstructorElement
@@ -116,7 +122,7 @@ const BurgerConstructor = () => {
             )}
             </ul>
             {bun && 
-              <li className={`${burgerConstructorStyles.element} pl-8 pr-4`}>
+              <li key={bun._id} className={`${burgerConstructorStyles.element} pl-8 pr-4`}>
                 <ConstructorElement
                   text={`${bun?.name} (низ)`}
                   thumbnail={bun?.image_mobile}
