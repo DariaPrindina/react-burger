@@ -6,8 +6,13 @@
 
 .defContainer {
   border: solid #8585AD 3px;
-  min-width: 300px;
-  min-height: 300px;
+  min-width: 50px;
+  min-height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  box-sizing: border-box;
 }
 
 .price {
@@ -23,8 +28,9 @@
   list-style: none;
   max-height: 656px;
   padding: 0;
-  min-width: 300px;
+  min-width: 304px;
   min-height: 300px;
+  border: 4px dotted transparent;
 }
 
 .list_list {
@@ -46,7 +52,7 @@
 }
 
 .onHover {
-  box-shadow: inset 0px -2px 0px #3C39EC;
+  border: 4px dotted #3C39EC;
 }
 
 .list_list::-webkit-scrollbar {

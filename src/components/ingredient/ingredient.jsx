@@ -18,7 +18,7 @@ const Ingredient = ({ingredient}) => {
 
   const [{isDragging}, dragRef] = useDrag({
     type: 'items',
-    item: _id,
+    item: ingredient,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),

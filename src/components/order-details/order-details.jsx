@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 const OrderDetails = () => {
   const order = useSelector(store => store.orderReducer.order);
+  console.log(order);
   return (
     <div className={orderDetailsStyles.content}>
       <p className='mb-8 mt-4 text text_type_digits-large'>{order}</p>
