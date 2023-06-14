@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerIngredientsStyles from './burger-ingredients.module.css'
@@ -9,6 +9,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import { ingredientPropTypes } from '../../utils/prop-types'
 import { popupDeleteIngredient } from '../../services/actions/ingredients';
 import { togglePopupIngredient } from '../../services/actions/popup';
+import { useInView } from 'react-intersection-observer';
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState('bun');
@@ -25,6 +26,20 @@ const BurgerIngredients = () => {
     dispatch(togglePopupIngredient(false))
     dispatch(popupDeleteIngredient())
   }
+
+  const [bunRef, isBunActive] = useInView({ threshold: 0.25 })
+  const [sauceRef, isSauceActive] = useInView({ threshold: 0.25 })
+  const [mainRef, isMainActive] = useInView({ threshold: 0.25 })  
+
+  useEffect(() => {
+    if (isBunActive) {
+      setCurrent('bun')
+    } else if (isSauceActive) {
+      setCurrent('sauce')
+    } else if (isMainActive) {
+      setCurrent('main')
+    }
+  }, [isBunActive, isSauceActive, isMainActive])
 
   return (
     <>
@@ -44,30 +59,36 @@ const BurgerIngredients = () => {
         </Tab>
       </nav>
       <div className={`${burgerIngredientsStyles.ingredients_container} pt-5`}>
-        <h2 id='bun' style={{margin: 0}} className='text text_type_main-medium pt-5'>Булки</h2>
-        <ul className={`${burgerIngredientsStyles.ingredients_list} ml-4 mr-4 mt-6 mb-5`}>
-          {ingredients && ingredients.map((ingredient) => ingredient.type === 'bun' && 
-            <li key={ingredient._id}>
-              <Ingredient key={ingredient._id} ingredient={ingredient} />
-            </li>
-          )}
-        </ul>
-        <h2 id='sauce' style={{margin: 0}} className='text text_type_main-medium pt-5'>Соусы</h2>
-        <ul className={`${burgerIngredientsStyles.ingredients_list} ml-4 mr-4 mt-6 mb-5`}>
-          {ingredients && ingredients.map((ingredient) => ingredient.type === 'sauce' && 
-            <li key={ingredient._id}>
-              <Ingredient key={ingredient._id} ingredient={ingredient} />
-            </li>
-          )}
-        </ul>
-        <h2 id='main' style={{margin: 0}} className='text text_type_main-medium pt-5'>Начинки</h2>
-        <ul className={`${burgerIngredientsStyles.ingredients_list} ml-4 mr-4 mt-6 mb-5`}>
-          {ingredients && ingredients.map((ingredient) => ingredient.type === 'main' && 
-            <li key={ingredient._id}>
-              <Ingredient key={ingredient._id} ingredient={ingredient} />
-            </li>
-          )}
-        </ul>
+        <div ref={bunRef}>
+          <h2 id='bun' style={{margin: 0}} className='text text_type_main-medium pt-5'>Булки</h2>
+          <ul className={`${burgerIngredientsStyles.ingredients_list} ml-4 mr-4 mt-6 mb-5`}>
+            {ingredients && ingredients.map((ingredient) => ingredient.type === 'bun' && 
+              <li key={ingredient._id}>
+                <Ingredient key={ingredient._id} ingredient={ingredient} />
+              </li>
+            )}
+          </ul>
+        </div>
+        <div ref={sauceRef}>
+          <h2 id='sauce' style={{margin: 0}} className='text text_type_main-medium pt-5'>Соусы</h2>
+          <ul className={`${burgerIngredientsStyles.ingredients_list} ml-4 mr-4 mt-6 mb-5`}>
+            {ingredients && ingredients.map((ingredient) => ingredient.type === 'sauce' && 
+              <li key={ingredient._id}>
+                <Ingredient key={ingredient._id} ingredient={ingredient} />
+              </li>
+            )}
+          </ul>
+        </div>
+        <div ref={mainRef}>
+          <h2 id='main' style={{margin: 0}} className='text text_type_main-medium pt-5'>Начинки</h2>
+          <ul className={`${burgerIngredientsStyles.ingredients_list} ml-4 mr-4 mt-6 mb-5`}>
+            {ingredients && ingredients.map((ingredient) => ingredient.type === 'main' && 
+              <li key={ingredient._id}>
+                <Ingredient key={ingredient._id} ingredient={ingredient} />
+              </li>
+            )}
+          </ul>
+        </div>
       </div>
     </section>
     {isModalIngredientOpen && 
