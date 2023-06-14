@@ -1,9 +1,8 @@
-import { act } from '@testing-library/react'
 import {
   ADD_CONSTRUCTOR_INGREDIENT, 
   DELETE_CONSTRUCTOR_INGREDIENT,
-  SORT_CONSTRUCTOR_INGREDIENTS,
   DELETE_ALL_CONSTRUCTOR_INGREDIENTS,
+  ADD_CONSTRUCTOR_BUN,
 } from '../actions/constructor-ingredients'
 
 const initialState = {
@@ -12,8 +11,28 @@ const initialState = {
 }
 
 export const constructorReducer = (state = initialState, action) => {
-  // switch (action.type) {
-  //   case ADD_CONSTRUCTOR_INGREDIENT: 
-      
-  // }
+  switch (action.type) {
+    case ADD_CONSTRUCTOR_INGREDIENT: 
+      return {
+        ...state,
+        otherIngredients: [...state.otherIngredients, action.ingredients]
+      }
+    case ADD_CONSTRUCTOR_BUN: 
+      return {
+        ...state,
+        bun: action.ingredients
+      }
+    case DELETE_CONSTRUCTOR_INGREDIENT: 
+      return {
+        ...state,
+        otherIngredients: [...state.otherIngredients.filter((ingr) => ingr.id !== action.id)]
+      }
+    case DELETE_ALL_CONSTRUCTOR_INGREDIENTS:
+      return {
+        otherIngredients: [],
+      }
+      default: {
+        return state
+      }
+  }
 }

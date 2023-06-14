@@ -3,8 +3,6 @@ import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-com
 import ingredientStyles from './ingredient.module.css'
 import PropTypes from "prop-types";
 import { useDrag } from 'react-dnd';
-import { POPUP_ADD_INGREDIENT } from "../../services/actions/ingredients";
-import { OPEN_POPUP } from "../../services/actions/popup";
 import { popupAddIngredient } from "../../services/actions/ingredients";
 import { togglePopupIngredient } from "../../services/actions/popup";
 
@@ -20,7 +18,7 @@ const Ingredient = ({ingredient}) => {
 
   const [{isDragging}, dragRef] = useDrag({
     type: 'items',
-    item: ingredient,
+    item: _id,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),

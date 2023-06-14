@@ -1,30 +1,31 @@
 import { useSelector } from 'react-redux';
 import { orderPostApi} from '../api/orderPostApi';
+import { DELETE_ALL_CONSTRUCTOR_INGREDIENTS } from './constructor-ingredients';
+
 
 export const POST_ORDER_REQUEST = 'POST_ORDER_REQUEST';
 export const POST_ORDER_SUCCESS = 'POST_ORDER_SUCCESS';
 export const POST_ORDER_FAILED = 'POST_ORDER_ERROR';
 
-export const postOrderRequest = () => ({
-  type: POST_ORDER_REQUEST,
-})
 
-export const postOrderSuccess = (items) => ({
-  type: POST_ORDER_SUCCESS,
-  payload: items,
-})
-
-export const postOrderFailed = () => ({
-  type: POST_ORDER_FAILED,
-})
-
-export const orderPost = (idArr) => dispatch => {
-  dispatch(postOrderRequest())
+export const orderPost = (idArr, fn) => dispatch => {
+  dispatch({
+    type: POST_ORDER_REQUEST,
+  })
   orderPostApi(idArr)
     .then(res => {
-      dispatch(postOrderSuccess(res))
+      dispatch({
+        type: POST_ORDER_SUCCESS,
+        payload: res.order,
+      })
+      dispatch({
+        type: DELETE_ALL_CONSTRUCTOR_INGREDIENTS,
+      })
     })
-    .catch(() => {
-      dispatch(postOrderFailed())
+    .catch((err) => {
+      dispatch({
+        type: POST_ORDER_FAILED,
+      })
+      console.log(err)
     })
 }

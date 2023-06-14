@@ -1,7 +1,7 @@
 const postApi = 'https://norma.nomoreparties.space/api/orders';
 
 const checkReponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(`Ошибка 1: ${res} ${res.status}`));
+  return res.ok ? res.json() : res.json().then((err) => Promise.reject(`Ошибка 1: ${err} ${err.status}`));
 };
 
 const orderPostApi = async (idArr) => {

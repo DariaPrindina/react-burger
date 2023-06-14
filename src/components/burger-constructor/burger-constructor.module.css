@@ -17,6 +17,8 @@
   list-style: none;
   max-height: 656px;
   padding: 0;
+  min-width: 300px;
+  min-height: 300px;
 }
 
 .list_list {
