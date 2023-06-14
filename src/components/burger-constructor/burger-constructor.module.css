@@ -4,6 +4,12 @@
   align-items: center;
 }
 
+.defContainer {
+  border: solid #8585AD 3px;
+  min-width: 300px;
+  min-height: 300px;
+}
+
 .price {
   display: flex;
   align-items: center;

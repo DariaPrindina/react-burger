@@ -94,7 +94,7 @@ const BurgerConstructor = () => {
         {ingredients && 
           <>
             {bun ? 
-                <li key={bun._id} className={`${burgerConstructorStyles.element} pl-8 pr-4`}>
+                <li className={`${burgerConstructorStyles.element} pl-8 pr-4`}>
                    <ConstructorElement
                      text={`${bun?.name} (верх)`}
                      thumbnail={bun?.image_mobile}
@@ -104,11 +104,11 @@ const BurgerConstructor = () => {
                     />
                 </li>
                 : 
-                <div>
+                <div className={burgerConstructorStyles.defContainer}>
                 <p className="text text_type_main-large">Выберите ингредиенты</p>
                 </div>}
             <ul className={`${burgerConstructorStyles.list_list}`}>
-            {otherIngredients && otherIngredients.map((ingredient) => (
+            {ingredients && otherIngredients.map((ingredient) => (
               <li key={ingredient._id} className={`${burgerConstructorStyles.element} pl-4 pr-4`}>
                 <DragIcon />
                 <ConstructorElement
@@ -122,7 +122,7 @@ const BurgerConstructor = () => {
             )}
             </ul>
             {bun && 
-              <li key={bun._id} className={`${burgerConstructorStyles.element} pl-8 pr-4`}>
+              <li key={bun.id} className={`${burgerConstructorStyles.element} pl-8 pr-4`}>
                 <ConstructorElement
                   text={`${bun?.name} (низ)`}
                   thumbnail={bun?.image_mobile}
