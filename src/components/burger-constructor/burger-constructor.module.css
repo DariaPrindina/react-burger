@@ -4,6 +4,28 @@
   align-items: center;
 }
 
+.defContainer {
+  border: solid #8585AD 3px;
+  min-width: 50px;
+  min-height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  box-sizing: border-box;
+}
+
+.defContainerIngr {
+  min-width: 50px;
+  min-height: 160px;
+  border: solid #8585AD 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  box-sizing: border-box;
+}
+
 .price {
   display: flex;
   align-items: center;
@@ -17,6 +39,9 @@
   list-style: none;
   max-height: 656px;
   padding: 0;
+  min-width: 304px;
+  min-height: 300px;
+  border: 4px dotted transparent;
 }
 
 .list_list {
@@ -35,6 +60,10 @@
   align-items: center;
   gap: 8px;
   justify-content: flex-end;
+}
+
+.onHover {
+  border: 4px dotted #3C39EC;
 }
 
 .list_list::-webkit-scrollbar {

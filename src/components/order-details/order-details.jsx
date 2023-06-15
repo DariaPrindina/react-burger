@@ -1,14 +1,15 @@
-import React, {useContext} from 'react'
+import React from 'react'
+import { useSelector } from 'react-redux';
 import orderDone from '../../images/orderDone.svg'
 import orderDetailsStyles from './order-details.module.css'
-import { OrderContext } from '../services/orderContext';
 import PropTypes from 'prop-types';
 
 const OrderDetails = () => {
-  const { order } = useContext(OrderContext)
+  const order = useSelector(store => store.orderReducer);
+
   return (
     <div className={orderDetailsStyles.content}>
-      <p className='mb-8 mt-4 text text_type_digits-large'>{order}</p>
+      <p className='mb-8 mt-4 text text_type_digits-large'>{order.order}</p>
       <p className='text text_type_main-medium'>идентификатор заказа</p>
       <img className={`mt-15 mb-15 ${orderDetailsStyles.image}`} src={orderDone} alt='заказ готовится'></img>
       <p className='text text_type_main-small'>Ваш заказ начали готовить</p>

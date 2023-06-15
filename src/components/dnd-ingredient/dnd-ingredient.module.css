@@ -1,0 +1,18 @@
+.element {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.opacity {
+  opacity: 0.5;
+}
+
+.drag_icon:hover {
+  cursor: grab;
+}
+
+.drag_icon:active {
+  cursor: grabbing;
+}
