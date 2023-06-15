@@ -12,3 +12,7 @@
 .drag_icon:hover {
   cursor: grab;
 }
+
+.drag_icon:active {
+  cursor: grabbing;
+}

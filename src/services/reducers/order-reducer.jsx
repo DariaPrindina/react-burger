@@ -30,11 +30,8 @@ export const orderReducer = (state = initialState, action) => {
     }
     case POST_ORDER_FAILED: {
       return {
-        ...state,
-        orderPostRequest: false,
+        ...initialState,
         orderPostFailed: true,
-        order: null,
-        name: '',
       };
     }
     default: {

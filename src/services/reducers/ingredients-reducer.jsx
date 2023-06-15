@@ -31,10 +31,8 @@ export const ingredientsReducer = (state = initialState, action) => {
     }
     case GET_INGREDIENTS_FAILED: {
       return {
-        ...state,
-        getIngredientsRequest: false,
+        ...initialState,
         getIngredientsFailed: true,
-        ingredients: [],
       }
     }
     case POPUP_ADD_INGREDIENT: {
