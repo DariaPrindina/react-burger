@@ -1,20 +1,20 @@
 const postApi = 'https://norma.nomoreparties.space/api/orders';
 
 const checkReponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(`Ошибка 1: ${err} ${err.status}`));
+  return res.ok ? res.json() : Promise.reject(`Ошибка 1: ${res} ${res.status} ${res.statusText}`);
 };
 
-const orderPostApi = async (idArr) => {
-  const res = await fetch(postApi, {
+const orderPostApi = (idArr) => {
+  return fetch(postApi, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      "ingredients": idArr
+      'ingredients': idArr
     })
-  });
-  return checkReponse(res);
+  })
+  .then((res) => checkReponse(res))
 }
 
 export {orderPostApi}

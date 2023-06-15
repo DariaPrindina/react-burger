@@ -6,13 +6,14 @@ import burgerConstructorStyles from './burger-constructor.module.css'
 import PropTypes from 'prop-types';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details'
-import { orderPost } from '../../services/actions/order'; 
+import { orderPost } from '../../services/actions/order';
 import { ingredientPropTypes } from '../../utils/prop-types'
 import { togglePopupOrder } from '../../services/actions/popup';
 import { 
   ADD_CONSTRUCTOR_INGREDIENT,
   ADD_CONSTRUCTOR_BUN
  } from '../../services/actions/constructor-ingredients';
+import { POST_ORDER_REQUEST } from '../../services/actions/order';
 import { v4 as uuidv4 } from 'uuid'
 
 const BurgerConstructor = () => {
@@ -46,13 +47,10 @@ const BurgerConstructor = () => {
     })
   })
   
-  const idIngredients = useMemo(
-    () => ingredients.map((ingr) => ingr.id).concat([bunConstructor.id]),
-    [ingredients, bunConstructor]
-  )
+  const idIngredients = ingredients?.map((ingr) => ingr?._id).concat(bunConstructor?._id)
 
   const submitOrder = () => {
-    orderPost(idIngredients)
+    dispatch(orderPost(idIngredients))
     dispatch(togglePopupOrder(true))
   }
 

@@ -9,12 +9,25 @@ import { togglePopupIngredient } from "../../services/actions/popup";
 const Ingredient = ({ingredient}) => {
   const dispatch = useDispatch()
   const {name, price, image, _id} = ingredient
-  const ingredients = useSelector(store => store.ingredientsReducer.ingredients)
   
   const clickIngr = () => {
     dispatch(popupAddIngredient(ingredient))
     dispatch(togglePopupIngredient(true))
   }
+
+  const bun = useSelector(store => store.constructorReducer.bun)
+  const otherIngredients = useSelector(store => store.constructorReducer.otherIngredients)
+  const allIngredientsConstructor = otherIngredients.concat(bun, bun)
+
+  let count = 0
+
+  allIngredientsConstructor.forEach(
+    (item) => {
+      if (item?._id === _id) {
+        (count += 1)
+      }
+    }
+  )
 
   const [{isDragging}, dragRef] = useDrag({
     type: 'items',
@@ -45,7 +58,8 @@ const Ingredient = ({ingredient}) => {
       <h3 style={{margin: 0, height: 48}} className='mr-2 text text_type_main-default'>
         {name}
       </h3>
-      <Counter count={1} size="default" />
+      {count > 0 &&
+        <Counter count={count} size="default" />}
     </div>
   )
 }

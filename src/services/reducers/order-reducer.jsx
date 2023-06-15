@@ -8,6 +8,7 @@ const initialState = {
   order: null,
   orderPostRequest: false,
   orderPostFailed: false,
+  name: '',
 }
 
 export const orderReducer = (state = initialState, action) => {
@@ -23,7 +24,8 @@ export const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         orderPostRequest: false,
-        order: action.payload,
+        order: action.number,
+        name: action.name,
       };
     }
     case POST_ORDER_FAILED: {
