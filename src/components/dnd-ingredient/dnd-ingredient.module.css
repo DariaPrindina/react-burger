@@ -5,6 +5,10 @@
   justify-content: flex-end;
 }
 
+.opacity {
+  opacity: 0.5;
+}
+
 .drag_icon:hover {
-  cursor: pointer;
+  cursor: grab;
 }

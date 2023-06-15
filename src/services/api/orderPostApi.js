@@ -1,11 +1,11 @@
-const postApi = 'https://norma.nomoreparties.space/api/orders';
+import { apiUrl } from "./getIngredientsData";
 
 const checkReponse = (res) => {
   return res.ok ? res.json() : Promise.reject(`Ошибка 1: ${res} ${res.status} ${res.statusText}`);
 };
 
 const orderPostApi = (idArr) => {
-  return fetch(postApi, {
+  return fetch(`${apiUrl}/orders`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

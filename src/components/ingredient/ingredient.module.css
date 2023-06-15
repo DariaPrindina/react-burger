@@ -11,7 +11,15 @@
   cursor: pointer;
 }
 
-
 .price {
   gap: 8px;
+}
+
+.drag {
+  opacity: 0.5;
+}
+
+.ingredient_header {
+  margin: 0;
+  height: 48px;
 }

@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useMemo } from 'react'
 import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientStyles from './ingredient.module.css'
 import PropTypes from "prop-types";
@@ -10,7 +11,7 @@ const Ingredient = ({ingredient}) => {
   const dispatch = useDispatch()
   const {name, price, image, _id} = ingredient
   
-  const clickIngr = () => {
+  const handleIngredientClick = () => {
     dispatch(popupAddIngredient(ingredient))
     dispatch(togglePopupIngredient(true))
   }
@@ -21,13 +22,15 @@ const Ingredient = ({ingredient}) => {
 
   let count = 0
 
-  allIngredientsConstructor.forEach(
+  useMemo(() => {
+    allIngredientsConstructor.forEach(
     (item) => {
       if (item?._id === _id) {
         (count += 1)
       }
     }
   )
+  }, [allIngredientsConstructor])
 
   const [{isDragging}, dragRef] = useDrag({
     type: 'items',
@@ -37,14 +40,11 @@ const Ingredient = ({ingredient}) => {
     }),
   });
 
-  const opacity = isDragging ? 0.5 : 1;
-
   return(
     <div 
       ref={dragRef} 
-      style={{ opacity }} 
-      className={ingredientStyles.container_ingredient} 
-      onClick={clickIngr}
+      className={`${ingredientStyles.container_ingredient} ${isDragging && ingredientStyles.drag}`} 
+      onClick={handleIngredientClick}
     >
       <div className='pl-4 pr-4'>
         <img src={image} alt={name} />
@@ -55,7 +55,7 @@ const Ingredient = ({ingredient}) => {
         </span>
         <CurrencyIcon type="primary"/>
       </div>
-      <h3 style={{margin: 0, height: 48}} className='mr-2 text text_type_main-default'>
+      <h3 className={`${ingredientStyles.ingredient_header} mr-2 text text_type_main-default`}>
         {name}
       </h3>
       {count > 0 &&
@@ -64,9 +64,8 @@ const Ingredient = ({ingredient}) => {
   )
 }
 
-// Ingredient.propTypes = {
-//   ingredient: PropTypes.object.isRequired,
-//   openModal: PropTypes.func.isRequired
-// }
+Ingredient.propTypes = {
+  ingredient: PropTypes.object.isRequired,
+}
 
 export default Ingredient

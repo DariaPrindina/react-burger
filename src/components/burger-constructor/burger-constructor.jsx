@@ -1,7 +1,7 @@
-import React, { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useDrop } from "react-dnd";
 import { useDispatch, useSelector } from 'react-redux';
-import {ConstructorElement, CurrencyIcon, Button, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import {ConstructorElement, CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './burger-constructor.module.css'
 import PropTypes from 'prop-types';
 import Modal from '../modal/modal';
@@ -22,32 +22,32 @@ const BurgerConstructor = () => {
   const ingredients = useSelector(store => store.constructorReducer.otherIngredients)
   const bunConstructor = useSelector(store => store.constructorReducer.bun)
 
-  const dropHandler = (ingr) => {
-    ingr.id = uuidv4()
-    ingr.type === 'bun' 
+  const dropHandler = (ingredient) => {
+    ingredient.id = uuidv4()
+    ingredient.type === 'bun' 
       ?
       dispatch({
         type: ADD_CONSTRUCTOR_BUN,
-        bun: ingr,
+        bun: ingredient,
       })
       :
       dispatch({
         type: ADD_CONSTRUCTOR_INGREDIENT,
-        otherIngredients: ingr,
+        otherIngredients: ingredient,
       })
   }
 
   const [{isHover}, dropTarget] = useDrop({
     accept: 'items',
-    drop: (ingr) => {
-      dropHandler(JSON.parse(JSON.stringify(ingr)))
+    drop: (ingredient) => {
+      dropHandler(JSON.parse(JSON.stringify(ingredient)))
     },
     collect: monitor => ({
       isHover: monitor.isOver()
     })
   })
   
-  const idIngredients = ingredients?.map((ingr) => ingr?._id).concat(bunConstructor?._id)
+  const idIngredients = ingredients?.map((ingredient) => ingredient?._id).concat(bunConstructor?._id)
 
   const submitOrder = () => {
     dispatch(orderPost(idIngredients))
@@ -77,7 +77,7 @@ const BurgerConstructor = () => {
         {!bunConstructor 
           ? 
           <div className={burgerConstructorStyles.defContainer}>
-            <p style={{textAlign:'center'}} className="text text_type_main-medium">Выберите булку</p>
+            <p className="text text_type_main-medium">Выберите булку</p>
           </div>
           :
           <li className={`${burgerConstructorStyles.element} pl-8 pr-4`}>
@@ -94,7 +94,7 @@ const BurgerConstructor = () => {
         {ingredients.length === 0
           ?
           <div className={burgerConstructorStyles.defContainerIngr}>
-            <p style={{textAlign:'center'}} className="text text_type_main-medium">Выберите ингредиенты</p>
+            <p className="text text_type_main-medium">Выберите ингредиенты</p>
           </div>
           :
           ingredients.map((ingredient, index) => (
@@ -105,7 +105,7 @@ const BurgerConstructor = () => {
         {!bunConstructor 
           ? 
           <div className={burgerConstructorStyles.defContainer}>
-            <p style={{textAlign:'center'}} className="text text_type_main-medium">Выберите булку</p>
+            <p className="text text_type_main-medium">Выберите булку</p>
           </div>
           :               
           <li key={bunConstructor.id} className={`${burgerConstructorStyles.element} pl-8 pr-4`}>

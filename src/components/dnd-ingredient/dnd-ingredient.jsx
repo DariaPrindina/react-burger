@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useDrop, useDrag } from "react-dnd";
 import { useDispatch } from 'react-redux';
+import PropTypes from "prop-types";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import dndIngredientStyles from './dnd-ingredient.module.css'
 import { DELETE_CONSTRUCTOR_INGREDIENT, REPLACE_CONSTRUCTOR_INGREDIENT } from '../../services/actions/constructor-ingredients'
@@ -19,8 +20,6 @@ const DndIngredient = ({index, ingredient}) => {
       }
     }
   })
-
-  const opacity = isDragging ? 0.5 : 1
 
   const [, drop] = useDrop({
     accept: 'ingredient',
@@ -46,7 +45,7 @@ const DndIngredient = ({index, ingredient}) => {
   drag(drop(ref))
 
   return (
-    <li style={{opacity}} ref={ref} key={ingredient.id} className={`${dndIngredientStyles.element} pl-4 pr-4`}>
+    <li ref={ref} key={ingredient.id} className={`${dndIngredientStyles.element} ${isDragging ? dndIngredientStyles.opacity : ''} pl-4 pr-4`}>
         <div className={dndIngredientStyles.drag_icon}>
           <DragIcon />
         </div>
@@ -59,6 +58,11 @@ const DndIngredient = ({index, ingredient}) => {
         />
     </li>
   )
+}
+
+DndIngredient.propTypes = {
+  index: PropTypes.number, 
+  ingredient: PropTypes.object.isRequired,
 }
 
 export default DndIngredient
