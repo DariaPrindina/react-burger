@@ -19,6 +19,7 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const isModalOrderOpen = useSelector(store => store.popupReducer.popupOrderOpen)
   const ingredients = useSelector(store => store.constructorReducer.otherIngredients)
+  const bunConstructor = useSelector(store => store.constructorReducer.bun)
 
   const dropHandler = (ingr) => {
     ingr.id = uuidv4()
@@ -27,7 +28,6 @@ const BurgerConstructor = () => {
       dispatch({
         type: ADD_CONSTRUCTOR_BUN,
         bun: ingr,
-        key: ingr.id,
       })
       :
       dispatch({
@@ -45,23 +45,11 @@ const BurgerConstructor = () => {
       isHover: monitor.isOver()
     })
   })
-
-  const bun = useMemo(
-    () => ingredients?.find((ingr) => ingr.type === 'bun'),
-    [ingredients]
-  )
-
-  const otherIngredients = useMemo(
-    () => ingredients?.filter((ingr) => ingr.type !== 'bun'),
-    [ingredients]
-  )
   
   const idIngredients = useMemo(
-    () => ingredients.map((ingr) => ingr._id),
-    [ingredients]
+    () => ingredients.map((ingr) => ingr.id).concat([bunConstructor.id]),
+    [ingredients, bunConstructor]
   )
-
-  console.log(idIngredients);
 
   const submitOrder = () => {
     orderPost(idIngredients)
@@ -73,11 +61,11 @@ const BurgerConstructor = () => {
   }
 
   const orderTotalPrice = useMemo(() => {
-    const otherIngredientsPrice = otherIngredients?.reduce((prev, ingr) => {
+    const otherIngredientsPrice = ingredients?.reduce((prev, ingr) => {
       return prev + ingr.price
     }, 0)
-    return otherIngredientsPrice + (bun ? bun.price * 2 : 0)
-  }, [bun, otherIngredients])
+    return otherIngredientsPrice + (bunConstructor ? bunConstructor.price * 2 : 0)
+  }, [bunConstructor, ingredients])
 
   const className = 
     `${burgerConstructorStyles.list} mt-25 
@@ -88,7 +76,7 @@ const BurgerConstructor = () => {
     <>
     <section>
       <ul ref={dropTarget} className={`${className}`}>
-        {!bun 
+        {!bunConstructor 
           ? 
           <div className={burgerConstructorStyles.defContainer}>
             <p style={{textAlign:'center'}} className="text text_type_main-medium">Выберите булку</p>
@@ -96,22 +84,22 @@ const BurgerConstructor = () => {
           :
           <li className={`${burgerConstructorStyles.element} pl-8 pr-4`}>
             <ConstructorElement
-              text={`${bun?.name} (верх)`}
-              thumbnail={bun?.image_mobile}
-              price={bun?.price}
+              text={`${bunConstructor?.name} (верх)`}
+              thumbnail={bunConstructor?.image_mobile}
+              price={bunConstructor?.price}
               type="top"
               isLocked={true}
             />
           </li>
         }
         <ul className={`${burgerConstructorStyles.list_list}`}>
-        {!otherIngredients 
+        {!ingredients 
           ?
           <div className={burgerConstructorStyles.defContainer}>
             <p style={{textAlign:'center'}} className="text text_type_main-medium">Выберите ингредиенты</p>
           </div>
           :
-           otherIngredients.map((ingredient) => (
+          ingredients.map((ingredient) => (
           <li key={ingredient.id} className={`${burgerConstructorStyles.element} pl-4 pr-4`}>
             <DragIcon />
             <ConstructorElement
@@ -124,17 +112,17 @@ const BurgerConstructor = () => {
           )
         )}
         </ul>
-        {!bun 
+        {!bunConstructor 
           ? 
           <div className={burgerConstructorStyles.defContainer}>
             <p style={{textAlign:'center'}} className="text text_type_main-medium">Выберите булку</p>
           </div>
           :               
-          <li key={bun._id} className={`${burgerConstructorStyles.element} pl-8 pr-4`}>
+          <li key={bunConstructor.id} className={`${burgerConstructorStyles.element} pl-8 pr-4`}>
             <ConstructorElement
-              text={`${bun?.name} (низ)`}
-              thumbnail={bun?.image_mobile}
-              price={bun?.price}
+              text={`${bunConstructor?.name} (низ)`}
+              thumbnail={bunConstructor?.image_mobile}
+              price={bunConstructor?.price}
               type="bottom"
               isLocked={true}
             />
@@ -165,7 +153,7 @@ const BurgerConstructor = () => {
 
 BurgerConstructor.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientPropTypes),
-  bun: PropTypes.object,
+  bunConstructor: PropTypes.object,
   orderTotalPrice: PropTypes.number
 }
 
