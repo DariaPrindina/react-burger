@@ -15,6 +15,17 @@
   box-sizing: border-box;
 }
 
+.defContainerIngr {
+  min-width: 50px;
+  min-height: 160px;
+  border: solid #8585AD 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  box-sizing: border-box;
+}
+
 .price {
   display: flex;
   align-items: center;

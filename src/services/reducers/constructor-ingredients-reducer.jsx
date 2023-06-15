@@ -3,6 +3,7 @@ import {
   DELETE_CONSTRUCTOR_INGREDIENT,
   DELETE_ALL_CONSTRUCTOR_INGREDIENTS,
   ADD_CONSTRUCTOR_BUN,
+  REPLACE_CONSTRUCTOR_INGREDIENT,
 } from '../actions/constructor-ingredients'
 
 const initialState = {
@@ -31,6 +32,15 @@ export const constructorReducer = (state = initialState, action) => {
       return {
         otherIngredients: [],
       }
+    case REPLACE_CONSTRUCTOR_INGREDIENT: {
+      const elements = [...state.otherIngredients]
+      elements.splice(action.item.dragIndex, 0, 
+        elements.splice(action.item.hoverIndex, 1)[0])
+      return {
+        ...state,
+        otherIngredients: elements,
+      }
+    }
       default: {
         return state
       }

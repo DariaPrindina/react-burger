@@ -37,7 +37,7 @@ const Ingredient = ({ingredient}) => {
     }),
   });
 
-  const opacity = isDragging ? 0 : 1;
+  const opacity = isDragging ? 0.5 : 1;
 
   return(
     <div 

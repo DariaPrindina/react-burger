@@ -13,8 +13,8 @@ import {
   ADD_CONSTRUCTOR_INGREDIENT,
   ADD_CONSTRUCTOR_BUN
  } from '../../services/actions/constructor-ingredients';
-import { POST_ORDER_REQUEST } from '../../services/actions/order';
 import { v4 as uuidv4 } from 'uuid'
+import DndIngredient from '../dnd-ingredient/dnd-ingredient';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -91,22 +91,14 @@ const BurgerConstructor = () => {
           </li>
         }
         <ul className={`${burgerConstructorStyles.list_list}`}>
-        {!ingredients 
+        {ingredients.length === 0
           ?
-          <div className={burgerConstructorStyles.defContainer}>
+          <div className={burgerConstructorStyles.defContainerIngr}>
             <p style={{textAlign:'center'}} className="text text_type_main-medium">Выберите ингредиенты</p>
           </div>
           :
-          ingredients.map((ingredient) => (
-          <li key={ingredient.id} className={`${burgerConstructorStyles.element} pl-4 pr-4`}>
-            <DragIcon />
-            <ConstructorElement
-              text={ingredient.name}
-              thumbnail={ingredient.image_mobile}
-              price={ingredient.price}
-              isLocked={false}
-            />
-          </li>
+          ingredients.map((ingredient, index) => (
+            <DndIngredient key={ingredient.id} ingredient={ingredient} index={index} />
           )
         )}
         </ul>
@@ -135,7 +127,13 @@ const BurgerConstructor = () => {
           }
           <CurrencyIcon />  
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={submitOrder}>
+        <Button 
+          htmlType="button" 
+          type="primary" 
+          size="large" 
+          onClick={submitOrder}
+          disabled={ingredients === 0 ? true : false}
+        >
           Оформить заказ
         </Button>
       </div>
