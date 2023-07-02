@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
 import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientStyles from './ingredient.module.css'
 import PropTypes from "prop-types";
@@ -68,4 +68,4 @@ Ingredient.propTypes = {
   ingredient: PropTypes.object.isRequired,
 }
 
-export default Ingredient
+export default React.memo(Ingredient)

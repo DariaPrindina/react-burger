@@ -65,18 +65,16 @@ const BurgerConstructor = () => {
     return otherIngredientsPrice + (bunConstructor ? bunConstructor.price * 2 : 0)
   }, [bunConstructor, ingredients])
 
-  const className = 
-    `${burgerConstructorStyles.list} mt-25 
-     ${isHover ?
-     burgerConstructorStyles.onHover : ''}`
+  const dottedBorder = 
+  `${isHover && burgerConstructorStyles.onHover}`
    
   return (
     <>
     <section>
-      <ul ref={dropTarget} className={`${className}`}>
+      <ul ref={dropTarget} className={`${burgerConstructorStyles.list} mt-25`}>
         {!bunConstructor 
           ? 
-          <div className={burgerConstructorStyles.defContainer}>
+          <div className={`${dottedBorder} ${burgerConstructorStyles.defContainer}`}>
             <p className="text text_type_main-medium">Выберите булку</p>
           </div>
           :
@@ -93,7 +91,7 @@ const BurgerConstructor = () => {
         <ul className={`${burgerConstructorStyles.list_list}`}>
         {ingredients.length === 0
           ?
-          <div className={burgerConstructorStyles.defContainerIngr}>
+          <div className={`${dottedBorder} ${burgerConstructorStyles.defContainerIngr}`}>
             <p className="text text_type_main-medium">Выберите ингредиенты</p>
           </div>
           :
@@ -104,7 +102,7 @@ const BurgerConstructor = () => {
         </ul>
         {!bunConstructor 
           ? 
-          <div className={burgerConstructorStyles.defContainer}>
+          <div className={`${dottedBorder} ${burgerConstructorStyles.defContainer}`}>
             <p className="text text_type_main-medium">Выберите булку</p>
           </div>
           :               
