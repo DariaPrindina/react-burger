@@ -7,7 +7,7 @@ export const postEmail = async (email) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      email: email
+      email
     })
   });
   return checkReponse(res);

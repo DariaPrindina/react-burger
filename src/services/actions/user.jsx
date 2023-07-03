@@ -24,7 +24,6 @@ export const forgotPassword = (email) => dispatch => {
   .then(res => {
     dispatch({
       type: PASSWORD_FORGOT_SUCCESS,
-      payload: res.message,
     })
   })
   .catch(err => {

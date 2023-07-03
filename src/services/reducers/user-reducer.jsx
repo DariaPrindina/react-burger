@@ -25,7 +25,7 @@ const initialState = {
   message: '',
 }
 
-export const UserReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case PASSWORD_FORGOT_REQUEST: {
       return {
