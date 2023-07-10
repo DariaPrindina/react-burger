@@ -42,13 +42,16 @@ export const resetPassword = (password, token) => dispatch => {
   .then(res => {
     dispatch({
       type: PASSWORD_RESET_SUCCESS,
+      success: res.success,
+      message: res.message,
     })
   })
   .catch(err => {
     dispatch({
       type: PASSWORD_RESET_FAILED,
+      success: err.success,
+      message: err.message,
     })
-    console.log(err)
   })
 }
 

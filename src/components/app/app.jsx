@@ -8,7 +8,7 @@ import appStyles from './app.module.css';
 import AppHeader from '../header/header'
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
-import { Register, Login, ForgotPassword, ResetPassword, NotFound } from '../../pages';
+import { Register, Login, ForgotPassword, ResetPassword, NotFound, Profile } from '../../pages';
 
 import { getIngredients } from '../../services/actions/ingredients';
 
@@ -44,6 +44,7 @@ const App = () => {
           <Route path='/forgot-password' element={<ForgotPassword />}/>
           <Route path='/reset-password' element={<ResetPassword />}/>
           <Route path='*' element={<NotFound />}/>
+          <Route path='/profile' element={<Profile />}/>
         </Routes>
       </>
     </div>

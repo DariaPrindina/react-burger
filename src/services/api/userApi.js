@@ -42,4 +42,3 @@ export const postUserRegister = async (email, password, name) => {
   return checkReponse(res);
 }
 
-

@@ -1,12 +1,37 @@
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
 import {Input, EmailInput, PasswordInput, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import registerStyles from './register.module.css'
+import { registrationUser } from '../../services/actions/user';
 
 export const Register = () => {
+  const dispatch = useDispatch()
+
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  
+  const enterNameValue = (evt) => {
+    setName(evt.target.value)
+  }
+  const enterEmailValue = (evt) => {
+    setEmail(evt.target.value)
+  }
+  const enterPasswordValue = (evt) => {
+    setPassword(evt.target.value)
+  }
+
+  const submitFormRegister = (evt) => {
+    evt.preventDefault()
+    dispatch(registrationUser(name, email, password))
+  }
+
   return (
     <div className={registerStyles.container}>
       <h1 className={`text text_type_main-medium mb-6`}>Регистрация</h1>
-      <form>
+      <form onSubmit={submitFormRegister} className={registerStyles.form}>
         <Input
           type={'text'}
           placeholder={'Имя'}
@@ -15,28 +40,31 @@ export const Register = () => {
           errorText={'Ошибка'}
           size={'default'}
           extraClass='mb-6'
-          value={''}
+          value={name}
+          onChange={enterNameValue}
         >
         </Input>
         <EmailInput
           name={'email'}
           extraClass='mb-6'
-          value={''}
+          value={email}
+          onChange={enterEmailValue}
         >
         </EmailInput>
         <PasswordInput
           name={'password'}
           extraClass='mb-6'
-          value={''}
+          value={password}
+          onChange={enterPasswordValue}
         />
-      </form>
-      <Button 
-          htmlType="button" 
+        <Button 
+          htmlType="submit" 
           type="primary" 
           size="medium" 
         >
-        Зарегистрироваться
+          Зарегистрироваться
         </Button>
+      </form>
       <p className="text text_type_main-default text_color_inactive mt-20">
         Уже зарегистрированы?&nbsp;
         <Link to='/login' className={registerStyles.link}>

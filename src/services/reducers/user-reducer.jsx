@@ -20,9 +20,10 @@ const initialState = {
   registrationUserSuccess: false,
   registrationUserFailed: false,
 
+  sendTokenPasswordSuccess: false,
+  sendTokenPasswordErrorMessage: '',
 
   user: null,
-  message: '',
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -73,6 +74,8 @@ export const userReducer = (state = initialState, action) => {
         passwordResetRequest: false,
         passwordResetSuccess: false,
         passwordResetFailed: true,
+        sendTokenPasswordSuccess: action.success,
+        sendTokenPasswordErrorMessage: action.message,
       }
     }
 
