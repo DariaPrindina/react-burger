@@ -9,16 +9,35 @@ import AppHeader from '../header/header'
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import { Register, Login, ForgotPassword, ResetPassword, NotFound, Profile } from '../../pages';
+import { getUser, refreshTokenFunction } from '../../services/actions/user';
 
 import { getIngredients } from '../../services/actions/ingredients';
+import { ProtectedRouteElement } from '../protected-route-element/protected-route-element';
 
 const App = () => {
-  const ingredientsFailed = useSelector(state => state.ingredientsReducer.getIngredientsFailed)
   const dispatch = useDispatch()
+  const ingredientsFailed = useSelector(state => state.ingredientsReducer.getIngredientsFailed)
+  const refreshToken = localStorage.getItem('refreshToken')
+  const accessToken = localStorage.getItem('accessToken')
+  const {authentification} = useSelector(store => store.userReducer)
+  
+  const {user} = useSelector(store => store.userReducer)
+
+  console.log(user)
+  console.log(authentification)
 
   useEffect(() => {
     dispatch(getIngredients())
-  }, [])
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(getUser())
+  }, [dispatch])
+
+  useEffect(()=> {
+    !accessToken && !refreshToken && dispatch(refreshTokenFunction())
+  }, [accessToken, refreshToken, dispatch])
+
 
   return (
     ingredientsFailed ? (
@@ -39,12 +58,12 @@ const App = () => {
             </DndProvider>
           </main>
           } />
-          <Route path='/login' element={<Login />}/>
-          <Route path='/register' element={<Register />}/>
-          <Route path='/forgot-password' element={<ForgotPassword />}/>
-          <Route path='/reset-password' element={<ResetPassword />}/>
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<ProtectedRouteElement element={<Register />} location='/register'/>}/>
+          <Route path='/forgot-password' element={<ProtectedRouteElement element={<ForgotPassword />} location='/forgot-password'/>}/>
+          <Route path='/reset-password' element={<ProtectedRouteElement element={<ResetPassword />} location='/reset-password'/>}/>
           <Route path='*' element={<NotFound />}/>
-          <Route path='/profile' element={<Profile />}/>
+          <Route path='/profile' element={<ProtectedRouteElement element={<Profile />} location='/profile'/>}/>
         </Routes>
       </>
     </div>

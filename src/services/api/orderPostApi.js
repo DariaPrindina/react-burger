@@ -1,4 +1,4 @@
-import { apiUrl, checkReponse } from "./getIngredientsData";
+import { apiUrl, checkResponse } from "./getIngredientsData";
 
 const orderPostApi = (idArr) => {
   return fetch(`${apiUrl}/orders`, {
@@ -10,7 +10,7 @@ const orderPostApi = (idArr) => {
       'ingredients': idArr
     })
   })
-  .then((res) => checkReponse(res))
+  .then((res) => checkResponse(res))
 }
 
 export {orderPostApi}

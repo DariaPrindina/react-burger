@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { EmailInput, Button} from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import forgotPasswordStyles from './forgot-password.module.css'
 import { forgotPassword } from '../../services/actions/user';
 
 export const ForgotPassword = () => {
 const [email, setEmail] = useState('')
 const dispatch = useDispatch()
+const navigate = useNavigate()
 
 const enterEmailValue = (evt) => {
   setEmail(evt.target.value)
@@ -17,6 +18,7 @@ const submitEmail = (evt) => {
   evt.preventDefault()
   dispatch(forgotPassword(email))
   setEmail('')
+  navigate('/reset-password', { replace: true })
 }
 
   return (

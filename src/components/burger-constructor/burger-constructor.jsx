@@ -120,7 +120,7 @@ const BurgerConstructor = () => {
       </ul>
       <div className={`${burgerConstructorStyles.price_container} mt-10 pr-4`}>
         <div className={`${burgerConstructorStyles.price} mr-10`}>
-          {orderTotalPrice &&
+          {
             <span className="text text_type_digits-medium">{orderTotalPrice}</span>
           }
           <CurrencyIcon />  

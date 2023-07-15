@@ -10,5 +10,5 @@ export const rootReducer = combineReducers({
   orderReducer,
   popupReducer,
   constructorReducer,
-  userReducer,
+  userReducer
 });

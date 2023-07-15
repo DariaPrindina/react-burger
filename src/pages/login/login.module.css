@@ -15,3 +15,10 @@
   opacity: 0.5;
   transition: ease-in 0.15s;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

@@ -25,7 +25,6 @@
   text-decoration: none;
   width: 320px;
   height: 64px;
-  color: #8585AD;
 }
 
 .form {
@@ -38,10 +37,21 @@
 
 .link_active {
   color: white;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  width: 320px;
+  height: 64px;
 }
 
 .ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }

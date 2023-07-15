@@ -7,14 +7,14 @@ function AppHeader(){
     <header className={`${headerStyles.header} text text_type_main-default text_color_inactive mt-5 ml-10 mr-10`}>
       <div className={`${headerStyles.content} p-4`}>
         <nav className={headerStyles.navbar}>
-        <a className={`${headerStyles.constructor} pl-5 pr-5 pt-4 pb-4`} href='/'>
+        <Link to='/' className={`${headerStyles.constructor} pl-5 pr-5 pt-4 pb-4`}>
           <BurgerIcon type="secondary"/>
           <span className={`${headerStyles.span} ml-2`}>Конструктор</span>
-        </a>
-        <a className={`${headerStyles.order_feed} pl-5 pr-5 pt-4 pb-4`} href='/'>
+        </Link>
+        <Link to='/' className={`${headerStyles.order_feed} pl-5 pr-5 pt-4 pb-4`}>
           <ListIcon type="secondary"/>
           <span className="ml-2">Лента заказов</span>
-        </a>
+        </Link>
         </nav>
         <div className={headerStyles.logo}>
           <Logo />

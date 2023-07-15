@@ -1,4 +1,4 @@
-import { apiUrl, checkReponse } from "./getIngredientsData";
+import { apiUrl, checkResponse } from "./getIngredientsData";
 
 export const postEmail = async (email) => {
   const res = await fetch(`${apiUrl}/password-reset`, {
@@ -10,7 +10,7 @@ export const postEmail = async (email) => {
       email
     })
   });
-  return checkReponse(res);
+  return checkResponse(res);
 }
 
 export const postResetPassword = async (password, token) => {
@@ -24,7 +24,7 @@ export const postResetPassword = async (password, token) => {
       token: token,
     })
   });
-  return checkReponse(res);
+  return checkResponse(res);
 }
 
 export const postUserRegister = async (email, password, name) => {
@@ -34,11 +34,80 @@ export const postUserRegister = async (email, password, name) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      email: email,
-			password: password,
-			name: name,
+      email,
+			password,
+			name,
     })
   });
-  return checkReponse(res);
+  return checkResponse(res)
 }
+
+export const postUserLogin = async (email, password) => {
+  const res = await fetch(`${apiUrl}/auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email: email,
+			password: password,
+    })
+  });
+  return checkResponse(res);
+}
+
+export const postUserLogout = async () => {
+  const res = await fetch(`${apiUrl}/auth/logout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      token: localStorage.getItem('refreshToken'),
+    })
+  });
+  return checkResponse(res);
+}
+
+export const postUserRefreshToken = async () => {
+  const res = await fetch(`${apiUrl}/auth/token`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify({
+      token: localStorage.getItem('refreshToken'),
+    })
+  });
+  return checkResponse(res);
+}
+
+export const getUserData = async () => {
+  const res = await fetch(`${apiUrl}/auth/user`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+    },
+  });
+  return checkResponse(res);
+}
+
+export const patchUserData = async (name, email, password) => {
+  const res = await fetch(`${apiUrl}/auth/user`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+    },
+    body: JSON.stringify({
+      name: name,
+      email: email,
+      password: password,
+    })
+  });
+  return checkResponse(res);
+}
+
+
 

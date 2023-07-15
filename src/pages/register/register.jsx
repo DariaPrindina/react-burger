@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {Input, EmailInput, PasswordInput, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
@@ -12,6 +12,8 @@ export const Register = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const stor = useSelector(store => store.userReducer.user)
   
   const enterNameValue = (evt) => {
     setName(evt.target.value)

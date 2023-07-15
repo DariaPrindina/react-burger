@@ -1,29 +1,31 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { PasswordInput, Input, Button} from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import resetPasswordStyles from './reset-password.module.css'
 import { resetPassword } from '../../services/actions/user';
 
 export const ResetPassword = () => {
-const userInfo = useSelector(store => store.userReducer.user)
-
-const [password, setPassword] = useState('')
-const [tokenPassword, setTokenPassword] = useState('')
-const dispatch = useDispatch()
-
-const enterPasswordValue = (evt) => {
-  setPassword(evt.target.value)
-}
-
-const enterCodeValue = (evt) => {
-  setTokenPassword(evt.target.value)
-}
-
-const submitFormResetPassword = (evt) => {
-  evt.preventDefault()
-  dispatch(resetPassword(password, tokenPassword))
-}
+  const navigate = useNavigate()  
+  const userInfo = useSelector(store => store.userReducer.user)
+  
+  const [password, setPassword] = useState('')
+  const [tokenPassword, setTokenPassword] = useState('')
+  const dispatch = useDispatch()
+  
+  const enterPasswordValue = (evt) => {
+    setPassword(evt.target.value)
+  }
+  
+  const enterCodeValue = (evt) => {
+    setTokenPassword(evt.target.value)
+  }
+  
+  const submitFormResetPassword = (evt) => {
+    evt.preventDefault()
+    dispatch(resetPassword(password, tokenPassword))
+    navigate('/', { replace: true })
+  }
 
   return (
     <div className={resetPasswordStyles.container}>
