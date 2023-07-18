@@ -12,11 +12,13 @@ export const popupReducer = (state = initialState, action) => {
   switch (action.type) {
     case TOGGLE_POPUP_INGREDIENT: {
       return {
+        ...state,
         popupIngredientOpen: action.payload,
       }
     }
     case TOGGLE_POPUP_ORDER: {
       return {
+        ...state,
         popupOrderOpen: action.payload,
       }
     }

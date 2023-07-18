@@ -89,8 +89,8 @@ export const registrationUser = (name, email, password) => dispatch => {
   .then(res => {
     dispatch({
       type: USER_REGISTRATION_SUCCESS,
-      name: res.user.name,
-      email: res.user.email,
+      payload: res.user,
+      token: res.accessToken,
     })
     localStorage.setItem('refreshToken', res.refreshToken)
     localStorage.setItem('accessToken', res.accessToken.split('Bearer ')[1])
@@ -112,8 +112,7 @@ export const loginUser = (email, password) => dispatch => {
   .then(res => {
     dispatch({
       type: USER_LOGIN_SUCCESS,
-      name: res.user.name,
-      email: res.user.email,
+      payload: res.user,
       token: res.accessToken,
     })
     localStorage.setItem('refreshToken', res.refreshToken)
@@ -135,8 +134,7 @@ export const getUser = () => dispatch => {
   .then(res => {
     dispatch({
       type: GET_USER_INFO_SUCCESS,
-      name: res.user.name,
-      email: res.user.email,
+      payload: res.user,
     })
   })
   .catch(err => {
@@ -155,8 +153,7 @@ export const setUser = (name, email, password) => dispatch => {
   .then(res => {
     dispatch({
       type: SET_USER_INFO_SUCCESS,
-      name: res.user.name,
-      email: res.user.email,
+      payload: res.user,
     })
     console.log(res)
   })

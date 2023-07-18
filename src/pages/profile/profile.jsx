@@ -13,8 +13,8 @@ export const Profile = () => {
   const {user} = useSelector(store => store.userReducer)
   const {authentification} = useSelector(store => store.userReducer)
 
-  const [nameNew, setNameNew] = useState(authentification ? user?.name : '')
-  const [emailNew, setEmailNew] = useState(authentification ? user?.email : '')
+  const [nameNew, setNameNew] = useState(authentification ? user.name : '')
+  const [emailNew, setEmailNew] = useState(authentification ? user.email : '')
   const [passwordNew, setPasswordNew] = useState('')
 
   const enterNameNewValue = (evt) => {

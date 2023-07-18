@@ -1,30 +1,19 @@
 import React, {useState, useEffect} from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerIngredientsStyles from './burger-ingredients.module.css'
 import Ingredient from '../ingredient/ingredient';
 import PropTypes from "prop-types";
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 import { ingredientPropTypes } from '../../utils/prop-types'
-import { popupDeleteIngredient } from '../../services/actions/ingredients';
-import { togglePopupIngredient } from '../../services/actions/popup';
 import { useInView } from 'react-intersection-observer';
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState('bun');
   const ingredients = useSelector(store => store.ingredientsReducer.ingredients)
-  const isModalIngredientOpen = useSelector(store => store.popupReducer.popupIngredientOpen)
-  const dispatch = useDispatch()
 
   const handleTabClick = (tab) => {
     setCurrent(tab)
     document.querySelector(`#${tab}`)?.scrollIntoView({ behavior: "smooth" })
-  }
-
-  const closeModal = () => {
-    dispatch(togglePopupIngredient(false))
-    dispatch(popupDeleteIngredient())
   }
 
   const [bunRef, isBunActive] = useInView({ threshold: 0.25 })
@@ -42,7 +31,6 @@ const BurgerIngredients = () => {
   }, [isBunActive, isSauceActive, isMainActive])
 
   return (
-    <>
     <section className={burgerIngredientsStyles.main_container}>
       <h1 className='mt-10 mb-5 text text_type_main-large'>
         Соберите бургер
@@ -91,12 +79,6 @@ const BurgerIngredients = () => {
         </div>
       </div>
     </section>
-    {isModalIngredientOpen && 
-      <Modal handleClose={closeModal} title='Детали ингредиента'>
-        <IngredientDetails />
-      </Modal>  
-    }
-    </>
   )
 }
 

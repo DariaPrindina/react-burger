@@ -165,7 +165,7 @@ export const userReducer = (state = initialState, action) => {
         userLoginSuccess: true,
         userLoginFailed: false,
         token: action.token,
-        user: action.user,
+        user: action.payload,
         authentification: true,
       }
     }
@@ -245,10 +245,7 @@ export const userReducer = (state = initialState, action) => {
         getUserInfoRequest: false,
         getUserInfoSuccess: true,
         getUserInfoFailed: false,
-        user: {
-          name: action.name,
-          email: action.email,
-        },
+        user: action.payload,
         authentification: true,
       }
     }
@@ -275,10 +272,7 @@ export const userReducer = (state = initialState, action) => {
         setUserInfoRequest: false,
         setUserInfoSuccess: true,
         setUserInfoFailed: false,
-        user: {
-          name: action.name,
-          email: action.email,
-        }
+        user: action.payload,
       }
     }
     case SET_USER_INFO_FAILED: {
