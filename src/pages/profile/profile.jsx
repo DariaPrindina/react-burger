@@ -3,8 +3,9 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import profileStyles from './profile.module.css'
 import { logoutUser, setUser } from '../../services/actions/user';
 import { useDispatch, useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { getUser } from '../../services/actions/user';
+import { useForm } from '../../components/hooks/useForm';
 
 export const Profile = () => {
   const dispatch = useDispatch()
@@ -13,30 +14,23 @@ export const Profile = () => {
   const {user} = useSelector(store => store.userReducer)
   const {authentification} = useSelector(store => store.userReducer)
 
-  const [nameNew, setNameNew] = useState(authentification ? user.name : '')
-  const [emailNew, setEmailNew] = useState(authentification ? user.email : '')
-  const [passwordNew, setPasswordNew] = useState('')
-
-  const enterNameNewValue = (evt) => {
-    setNameNew(evt.target.value)
-  }
-  const enterEmailNewValue = (evt) => {
-    setEmailNew(evt.target.value)
-  }
-  const enterPasswordNewValue = (evt) => {
-    setPasswordNew(evt.target.value)
-  }
+  const {values, handleChange, setValues} = useForm({
+    name: authentification ? user.name : '',
+    email: authentification ? user.email : '',
+    password: ''
+  })
 
   const submitFormUpdateUser = (evt) => {
     evt.preventDefault()
-    dispatch(setUser(nameNew, emailNew, passwordNew))
+    dispatch(setUser(values.name, values.email, values.password))
+    setValues({...values, password: ''})
   }
 
   const undoChanges = (evt) => {
     evt.preventDefault()
-    setNameNew(user?.name)
-    setEmailNew(user?.email)
-    setPasswordNew('')
+    setValues({...values, name: user?.name})
+    setValues({...values, email: user?.email})
+    setValues({...values, password: ''})
   }
 
   const logout = (evt) => {
@@ -100,22 +94,22 @@ export const Profile = () => {
           <Input
             type={'text'}
             placeholder={'Имя'}
-            value={nameNew}
+            value={values.name}
             name={'name'}
             errorText={'Ошибка'}
             error={false}
             size={'default'}
             extraClass="mb-6"
-            onChange={enterNameNewValue}
+            onChange={handleChange}
             icon={'EditIcon'}
           />
           <EmailInput
             name={'login'}
             extraClass='mb-6'
-            value={emailNew}
+            value={values.email}
             error={false}
             icon={'EditIcon'}
-            onChange={enterEmailNewValue}
+            onChange={handleChange}
           >
           </EmailInput>
           <Input
@@ -123,10 +117,10 @@ export const Profile = () => {
             extraClass='mb-6'
             errorText={'Ошибка'}
             error={false}
-            value={passwordNew}
+            value={values.password}
             icon={'EditIcon'}
             placeholder={'Пароль'}
-            onChange={enterPasswordNewValue}
+            onChange={handleChange}
             size={'default'}
           />
           <div className={profileStyles.buttons}>

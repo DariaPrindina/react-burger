@@ -34,6 +34,17 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details'
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
+import {
+  mainPath,
+  loginPath,
+  registerPath,
+  forgogPasswordPath,
+  resetPasswordPath,
+  notFoundPath,
+  profilePath,
+  ingredientsIdPath
+} from '../../utils/rootes'
+
 const App = () => {
   const dispatch = useDispatch()
   const location = useLocation()
@@ -42,6 +53,7 @@ const App = () => {
 
   const isModalOrderOpen = useSelector(store => store.popupReducer.popupOrderOpen)
   const ingredientsFailed = useSelector(state => state.ingredientsReducer.getIngredientsFailed)
+  const {token} = useSelector(store => store.userReducer)
 
   const refreshToken = localStorage.getItem('refreshToken')
   const accessToken = localStorage.getItem('accessToken')
@@ -61,7 +73,7 @@ const App = () => {
   }, [dispatch])
 
   useEffect(() => {
-    dispatch(getUser())
+    token && dispatch(getUser())
   }, [dispatch])
 
   useEffect(()=> {
@@ -83,7 +95,7 @@ const App = () => {
         <AppHeader />
         <Routes location={background || location}>
           <Route 
-            path='/' 
+            path={mainPath} 
             exact
             element={
               <main className={appStyles.main}>
@@ -94,14 +106,14 @@ const App = () => {
               </main>
             } 
           />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<ProtectedRouteElement element={<Register />} location='/register'/>}/>
-          <Route path='/forgot-password' element={<ProtectedRouteElement element={<ForgotPassword />} location='/forgot-password'/>}/>
-          <Route path='/reset-password' element={<ProtectedRouteElement element={<ResetPassword />} location='/reset-password'/>}/>
-          <Route path='*' element={<NotFound />}/>
-          <Route path='/profile' element={<ProtectedRouteElement element={<Profile />} location='/profile'/>}/>
+          <Route path={loginPath} element={<ProtectedRouteElement element={<Login />} onlyUnAuth={true} />} />
+          <Route path={registerPath} element={<ProtectedRouteElement element={<Register />} onlyUnAuth={true} />} />
+          <Route path={forgogPasswordPath} element={<ProtectedRouteElement element={<ForgotPassword />} onlyUnAuth={true} />} />
+          <Route path={resetPasswordPath} element={<ProtectedRouteElement element={<ResetPassword />} onlyUnAuth={true} />} />
+          <Route path={notFoundPath} element={<NotFound />}/>
+          <Route path={profilePath} element={<ProtectedRouteElement element={<Profile />} onlyUnAuth={false} />}/>
           <Route 
-            path='/ingredients/:id' 
+            path={ingredientsIdPath}
             element={
                 <IngredientDetails title='Детали ингредиента'/>
             }
@@ -109,13 +121,15 @@ const App = () => {
         </Routes>
         
         {background && (
-          <Route path='/ingredients/:id'
-            element={
-              <Modal handleClose={closeIngredientModal} title='Детали ингредиента' >
-                <IngredientDetails />
-              </Modal>
-            }
-          />
+          <Routes>
+            <Route path={ingredientsIdPath}
+              element={
+                <Modal handleClose={closeIngredientModal} title='Детали ингредиента' >
+                  <IngredientDetails />
+                </Modal>
+              }
+            />
+          </Routes>
         )}
 
         {isModalOrderOpen &&

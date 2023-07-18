@@ -82,15 +82,32 @@ export const postUserRefreshToken = async () => {
   return checkResponse(res);
 }
 
+export const fetchWithRefresh = async (url, options) => {
+  try {
+    const res = await fetch(url, options);
+    return await checkResponse(res);
+  } catch (err) {
+    if (err.message === "jwt expired") {
+      const refreshData = await postUserRefreshToken(); 
+      localStorage.setItem("refreshToken", refreshData.refreshToken);
+      localStorage.setItem("accessToken", refreshData.accessToken);
+      options.headers.authorization = refreshData.accessToken;
+      const res = await fetch(url, options);
+      return await checkResponse(res);
+    } else {
+      return Promise.reject(err);
+    }
+  }
+};
+
 export const getUserData = async () => {
-  const res = await fetch(`${apiUrl}/auth/user`, {
+  return fetchWithRefresh(`${apiUrl}/auth/user`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
     },
   });
-  return checkResponse(res);
 }
 
 export const patchUserData = async (name, email, password) => {

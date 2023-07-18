@@ -2,26 +2,21 @@ import { EmailInput, PasswordInput, Button} from '@ya.praktikum/react-developer-
 import { Link, useNavigate } from 'react-router-dom';
 import loginStyles from './login.module.css'
 import { useDispatch } from 'react-redux';
-import { useState } from 'react';
 import { loginUser } from '../../services/actions/user';
+import { useForm } from '../../components/hooks/useForm';
 
 export const Login = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
-  const enterEmailValue = (evt) => {
-    setEmail(evt.target.value)
-  }
-  const enterPasswordValue = (evt) => {
-    setPassword(evt.target.value)
-  }
+  const {values, handleChange} = useForm({
+    email: '',
+    password: ''
+  })
 
   const submitFormRegister = (evt) => {
     evt.preventDefault()
-    dispatch(loginUser(email, password))
+    dispatch(loginUser(values.email, values.password))
     navigate('/', { replace: true })
   }
 
@@ -32,15 +27,15 @@ export const Login = () => {
         <EmailInput
           name={'email'}
           extraClass='mb-6'
-          value={email}
-          onChange={enterEmailValue}
+          value={values.email}
+          onChange={handleChange}
         >
         </EmailInput>
         <PasswordInput
           name={'password'}
           extraClass='mb-6'
-          value={password}
-          onChange={enterPasswordValue}
+          value={values.password}
+          onChange={handleChange}
         />
         <Button 
           htmlType="submit" 

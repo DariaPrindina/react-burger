@@ -45,19 +45,17 @@ const Ingredient = ({ingredient}) => {
 
 
   return(
+    <Link 
+      onClick={() => handleIngredientClick(ingredient)}
+      className={ingredientStyles.link}
+      to={`/ingredients/${_id}`}
+      state={{background: location}}
+      key={_id}
+    >
     <div 
       ref={dragRef} 
       className={`${ingredientStyles.container_ingredient} ${isDragging && ingredientStyles.drag}`} 
     >
-      <Link 
-        onClick={() => handleIngredientClick(ingredient)}
-        className={ingredientStyles.link}
-          to={{
-            pathname: `/ingredients/${_id}`,
-            state: {background: location}
-          }}
-        key={_id}
-        >
         <div className='pl-4 pr-4'>
           <img src={image} alt={name} />
         </div>
@@ -72,8 +70,8 @@ const Ingredient = ({ingredient}) => {
         </h3>
         {count > 0 &&
           <Counter count={count} size="default" />}
-      </Link>
     </div>
+      </Link>
   )
 }
 

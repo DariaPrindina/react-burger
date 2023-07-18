@@ -1,19 +1,18 @@
-import { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {Input, EmailInput, PasswordInput, Button} from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import registerStyles from './register.module.css'
 import { registrationUser } from '../../services/actions/user';
 
 export const Register = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
-  const stor = useSelector(store => store.userReducer.user)
   
   const enterNameValue = (evt) => {
     setName(evt.target.value)
@@ -28,6 +27,7 @@ export const Register = () => {
   const submitFormRegister = (evt) => {
     evt.preventDefault()
     dispatch(registrationUser(name, email, password))
+    navigate('/login', {replace: true})
   }
 
   return (

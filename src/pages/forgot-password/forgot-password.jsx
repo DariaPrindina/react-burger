@@ -1,23 +1,22 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import { useDispatch } from 'react-redux'
 import { EmailInput, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import forgotPasswordStyles from './forgot-password.module.css'
 import { forgotPassword } from '../../services/actions/user';
+import { useForm } from '../../components/hooks/useForm';
 
 export const ForgotPassword = () => {
-const [email, setEmail] = useState('')
 const dispatch = useDispatch()
 const navigate = useNavigate()
 
-const enterEmailValue = (evt) => {
-  setEmail(evt.target.value)
-}
+const {values, handleChange } = useForm({
+  email: ''
+})
 
 const submitEmail = (evt) => {
   evt.preventDefault()
-  dispatch(forgotPassword(email))
-  setEmail('')
+  dispatch(forgotPassword(values.email))
   navigate('/reset-password', { replace: true })
 }
 
@@ -27,9 +26,9 @@ const submitEmail = (evt) => {
       <form onSubmit={submitEmail} className={forgotPasswordStyles.form}>
         <EmailInput
           extraClass='mb-6'
-          value={email}
+          value={values.email}
           name={'email'}
-          onChange={enterEmailValue}
+          onChange={handleChange}
           placeholder="Укажите e-mail"
         >
         </EmailInput>
