@@ -77,8 +77,6 @@ const App = () => {
     )
   }
 
-  console.log(background)
-
   return (
     <>
       <div className={appStyles.app}>

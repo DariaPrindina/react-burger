@@ -13,11 +13,15 @@ import {
  } from '../../services/actions/constructor-ingredients';
 import { v4 as uuidv4 } from 'uuid'
 import DndIngredient from '../dnd-ingredient/dnd-ingredient';
+import { useNavigate } from 'react-router-dom';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const ingredients = useSelector(store => store.constructorReducer.otherIngredients)
   const bunConstructor = useSelector(store => store.constructorReducer.bun)
+
+  const {authentification} = useSelector(store => store.userReducer)
 
   const dropHandler = (ingredient) => {
     ingredient.id = uuidv4()
@@ -49,6 +53,11 @@ const BurgerConstructor = () => {
   const submitOrder = () => {
     dispatch(orderPost(idIngredients))
     dispatch(togglePopupOrder(true))
+  }
+
+  const redirectToLogin = (evt) => {
+    evt.preventDefault()
+    navigate('/login', { replace: true })
   }
 
   const orderTotalPrice = useMemo(() => {
@@ -122,8 +131,8 @@ const BurgerConstructor = () => {
             htmlType="button" 
             type="primary" 
             size="large" 
-            onClick={submitOrder}
-            disabled={ingredients === 0 ? true : false}
+            onClick={authentification ? submitOrder : redirectToLogin}
+            disabled={ingredients.length > 0 ? false : true}
           >
             Оформить заказ
           </Button>
