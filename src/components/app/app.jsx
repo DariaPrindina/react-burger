@@ -38,7 +38,7 @@ import {
   mainPath,
   loginPath,
   registerPath,
-  forgogPasswordPath,
+  forgotPasswordPath,
   resetPasswordPath,
   notFoundPath,
   profilePath,
@@ -106,9 +106,11 @@ const App = () => {
               </main>
             } 
           />
+          {/* Авторизованному юзеру не доступен роут авторизации, 
+          регистрации, forgot и reset password */}
           <Route path={loginPath} element={<ProtectedRouteElement element={<Login />} onlyUnAuth={true} />} />
           <Route path={registerPath} element={<ProtectedRouteElement element={<Register />} onlyUnAuth={true} />} />
-          <Route path={forgogPasswordPath} element={<ProtectedRouteElement element={<ForgotPassword />} onlyUnAuth={true} />} />
+          <Route path={forgotPasswordPath} element={<ProtectedRouteElement element={<ForgotPassword />} onlyUnAuth={true} />} />
           <Route path={resetPasswordPath} element={<ProtectedRouteElement element={<ResetPassword />} onlyUnAuth={true} />} />
           <Route path={notFoundPath} element={<NotFound />}/>
           <Route path={profilePath} element={<ProtectedRouteElement element={<Profile />} onlyUnAuth={false} />}/>

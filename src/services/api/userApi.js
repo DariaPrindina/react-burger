@@ -111,7 +111,7 @@ export const getUserData = async () => {
 }
 
 export const patchUserData = async (name, email, password) => {
-  const res = await fetch(`${apiUrl}/auth/user`, {
+  return fetchWithRefresh(`${apiUrl}/auth/user`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -123,7 +123,6 @@ export const patchUserData = async (name, email, password) => {
       password: password,
     })
   });
-  return checkResponse(res);
 }
 
 

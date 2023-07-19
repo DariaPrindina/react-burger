@@ -1,7 +1,7 @@
 export const mainPath = "/";
 export const loginPath = "/login";
 export const registerPath = "/register";
-export const forgogPasswordPath = "/forgot-password";
+export const forgotPasswordPath = "/forgot-password";
 export const resetPasswordPath = "/reset-password";
 export const notFoundPath = "*";
 export const profilePath = "/profile";
