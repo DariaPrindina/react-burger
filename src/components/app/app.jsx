@@ -22,7 +22,7 @@ import {
   Profile 
 } from '../../pages';
 
-import { getUser, refreshTokenFunction } from '../../services/actions/user';
+import { getUser } from '../../services/actions/user';
 import { getIngredients } from '../../services/actions/ingredients';
 import { ProtectedRouteElement } from '../protected-route-element/protected-route-element';
 
@@ -53,10 +53,6 @@ const App = () => {
 
   const isModalOrderOpen = useSelector(store => store.popupReducer.popupOrderOpen)
   const ingredientsFailed = useSelector(state => state.ingredientsReducer.getIngredientsFailed)
-  const {token} = useSelector(store => store.userReducer)
-
-  const refreshToken = localStorage.getItem('refreshToken')
-  const accessToken = localStorage.getItem('accessToken')
 
   const closeOrderModal = () => {
     dispatch(togglePopupOrder(false))
@@ -73,11 +69,7 @@ const App = () => {
   }, [dispatch])
 
   useEffect(() => {
-    token && dispatch(getUser())
-  }, [dispatch])
-
-  useEffect(()=> {
-    !accessToken && !refreshToken && dispatch(refreshTokenFunction())
+    dispatch(getUser())
   }, [dispatch])
 
   if (ingredientsFailed) {
@@ -106,8 +98,6 @@ const App = () => {
               </main>
             } 
           />
-          {/* Авторизованному юзеру не доступен роут авторизации, 
-          регистрации, forgot и reset password */}
           <Route path={loginPath} element={<ProtectedRouteElement element={<Login />} onlyUnAuth={true} />} />
           <Route path={registerPath} element={<ProtectedRouteElement element={<Register />} onlyUnAuth={true} />} />
           <Route path={forgotPasswordPath} element={<ProtectedRouteElement element={<ForgotPassword />} onlyUnAuth={true} />} />
