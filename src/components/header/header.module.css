@@ -1,5 +1,4 @@
 .header {
-  width: 100%;
   background-color: #1C1C21;
 }
 
@@ -15,20 +14,39 @@
 
 .constructor {
   display: flex;
-  color: inherit; 
-  text-decoration: inherit;
+  color: #8585AD; 
+  text-decoration: none;
+}
+
+.constructor_active {
+  display: flex;
+  color: white; 
+  text-decoration: none;
 }
 
 .order_feed {
   display: flex;
-  color: inherit; 
-  text-decoration: inherit;
+  color: #8585AD; 
+  text-decoration: none;
+}
+
+.order_feed_active {
+  display: flex;
+  color: white; 
+  text-decoration: none;
 }
 
 .account_link {
   display: flex;
   justify-self: end;
-  color: inherit; 
+  color: #8585AD; 
+  text-decoration: inherit;
+}
+
+.account_link_active {
+  display: flex;
+  justify-self: end;
+  color: white; 
   text-decoration: inherit;
 }
 

@@ -23,3 +23,8 @@
   margin: 0;
   height: 48px;
 }
+
+.link {
+  text-decoration: none;
+  color: white;
+}

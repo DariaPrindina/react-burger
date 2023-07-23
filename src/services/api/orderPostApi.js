@@ -1,8 +1,4 @@
-import { apiUrl } from "./getIngredientsData";
-
-const checkReponse = (res) => {
-  return res.ok ? res.json() : Promise.reject(`Ошибка 1: ${res} ${res.status} ${res.statusText}`);
-};
+import { apiUrl, checkResponse } from "./getIngredientsData";
 
 const orderPostApi = (idArr) => {
   return fetch(`${apiUrl}/orders`, {
@@ -14,7 +10,7 @@ const orderPostApi = (idArr) => {
       'ingredients': idArr
     })
   })
-  .then((res) => checkReponse(res))
+  .then((res) => checkResponse(res))
 }
 
 export {orderPostApi}

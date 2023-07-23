@@ -8,10 +8,21 @@
   margin: 0;
 }
 
+.name {
+  text-align: center;
+}
+
 .title {
   text-align: center;
 }
 
 .list_item {
   text-align: center;
+}
+
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
