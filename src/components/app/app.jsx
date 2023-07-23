@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import { 
   Routes, 
   Route,
@@ -11,15 +9,15 @@ import {
 
 import appStyles from './app.module.css';
 import AppHeader from '../header/header'
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import { 
+  Home,
   Register, 
   Login, 
   ForgotPassword, 
   ResetPassword, 
   NotFound, 
-  Profile 
+  Profile,
+  Feed 
 } from '../../pages';
 
 import { getUser } from '../../services/actions/user';
@@ -42,7 +40,11 @@ import {
   resetPasswordPath,
   notFoundPath,
   profilePath,
-  ingredientsIdPath
+  ingredientsIdPath,
+  feedPath,
+  feedIdPath,
+  profileOrdersPath,
+  profileOrdersIdPath
 } from '../../utils/rootes'
 
 const App = () => {
@@ -86,30 +88,15 @@ const App = () => {
       <div className={appStyles.app}>
         <AppHeader />
         <Routes location={background || location}>
-          <Route 
-            path={mainPath} 
-            exact
-            element={
-              <main className={appStyles.main}>
-                <DndProvider backend={HTML5Backend}>
-                  <BurgerIngredients />
-                  <BurgerConstructor />
-                </DndProvider>
-              </main>
-            } 
-          />
+          <Route path={mainPath} element={<Home />}/>
           <Route path={loginPath} element={<ProtectedRouteElement element={<Login />} onlyUnAuth={true} />} />
           <Route path={registerPath} element={<ProtectedRouteElement element={<Register />} onlyUnAuth={true} />} />
           <Route path={forgotPasswordPath} element={<ProtectedRouteElement element={<ForgotPassword />} onlyUnAuth={true} />} />
           <Route path={resetPasswordPath} element={<ProtectedRouteElement element={<ResetPassword />} onlyUnAuth={true} />} />
           <Route path={notFoundPath} element={<NotFound />}/>
           <Route path={profilePath} element={<ProtectedRouteElement element={<Profile />} onlyUnAuth={false} />}/>
-          <Route 
-            path={ingredientsIdPath}
-            element={
-                <IngredientDetails title='Детали ингредиента'/>
-            }
-          />
+          <Route path={ingredientsIdPath} element={<IngredientDetails title='Детали ингредиента'/>}/>
+          <Route path={feedPath} element={<Feed />}/>
         </Routes>
         
         {background && (
