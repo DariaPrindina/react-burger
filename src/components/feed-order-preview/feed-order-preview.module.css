@@ -1,0 +1,28 @@
+.inform_list {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 60px 0;
+  margin: 0;
+}
+
+.name {
+  text-align: center;
+}
+
+.title {
+  text-align: center;
+}
+
+.list_item {
+  text-align: center;
+}
+
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}

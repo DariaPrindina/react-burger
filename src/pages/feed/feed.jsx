@@ -4,7 +4,6 @@ import { FeedItem } from '../../components/feed-item/feed-item';
 import {ordersExample} from '../../utils/example/example-orders'
 
 export const Feed = () => {
-  // console.log(ordersExample)
   return (
     <div className={feedStyles.page}>
       <h1 className='mt-10 mb-5 text text_type_main-large'>
@@ -24,8 +23,7 @@ export const Feed = () => {
                 <h2 className='text text_type_main-medium mb-6'>Готовы:</h2>
                 <ul className={feedStyles.numbers_ready}>
                   {ordersExample.orders.map(item => {
-                    if(item.status == "done") {
-                      console.log(item.number)
+                    if(item.status === "done") {
                       return (
                         <li>
                           <span className='text text_type_digits-default'>{item.number}</span>
@@ -39,8 +37,7 @@ export const Feed = () => {
                 <h2 className='text text_type_main-medium mb-6'> В работе:</h2>
                 <ul className={feedStyles.numbers_in_work}>
                   {ordersExample.orders.map(item => {
-                    if(item.status == "done") {
-                      console.log(item.number)
+                    if(item.status === "done") {
                       return (
                         <li>
                           <span className='text text_type_digits-default'>{item.number}</span>

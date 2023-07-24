@@ -31,6 +31,7 @@ import { togglePopupIngredient } from '../../services/actions/popup';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details'
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import FeedOrderPreview from '../feed-order-preview/feed-order-preview';
 
 import {
   mainPath,
@@ -96,7 +97,9 @@ const App = () => {
           <Route path={notFoundPath} element={<NotFound />}/>
           <Route path={profilePath} element={<ProtectedRouteElement element={<Profile />} onlyUnAuth={false} />}/>
           <Route path={ingredientsIdPath} element={<IngredientDetails title='Детали ингредиента'/>}/>
+          <Route path={feedIdPath} element={<FeedOrderPreview />}/>
           <Route path={feedPath} element={<Feed />}/>
+          <Route path={profileOrdersPath} element={<NotFound />}/>
         </Routes>
         
         {background && (

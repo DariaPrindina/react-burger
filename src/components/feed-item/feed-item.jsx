@@ -1,6 +1,6 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import feedItemStyles from "./feed-item.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
 export const FeedItem = ({ orderData }) => {
@@ -8,18 +8,26 @@ export const FeedItem = ({ orderData }) => {
   const {_id, status, number, createdAt} = orderData
   const orderIngredients = orderData.ingredients
   const location = useLocation()
+  const dispatch = useDispatch()
 
   const ingredientsList = orderData.ingredients.map(item => {
     const ingredient = ingredients.find(
-      (element) => element._id == item
+      (element) => element._id === item
     )
     return ingredient
   })
 
   const ingredientsListLength = ingredientsList.length
 
+  const handleFeedOrderClick = (order) => {
+    // dispatch(popupFeedOrder(order))
+    // dispatch(togglePopupFeedOrder(true))
+    return;
+  }
+
   return (
     <Link 
+    onClick={() => handleFeedOrderClick(orderData)}
     to={`/profile/orders/${_id}`}
     state={{background: location}}
     key={_id}   
