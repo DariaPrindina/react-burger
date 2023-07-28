@@ -16,6 +16,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+  min-height: 400px;
 }
 
 .header {
@@ -24,8 +26,29 @@
   align-items: center;
   height: 64px;
   width: 640px;
+  position: relative;
+}
+
+.closeIcon {
+  position: absolute;
+  right: 40px;
+  top: 60px;
+  z-index: 99;
+}
+
+.closeIconHeader {
+  text-align: center;
+  z-index: 99;
+}
+
+.closeIconHeader:hover {
+  cursor: pointer;
 }
 
 .closeIcon:hover {
   cursor: pointer;
+}
+
+.title {
+  max-width: 580px;
 }

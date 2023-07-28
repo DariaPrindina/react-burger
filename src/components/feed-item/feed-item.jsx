@@ -1,18 +1,21 @@
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import feedItemStyles from "./feed-item.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const FeedItem = ({ orderData }) => {
   const {ingredients} = useSelector(store => store.ingredientsReducer);
-  const {_id, status, number, createdAt} = orderData
+  const {_id, status, name, number, createdAt} = orderData
   const orderIngredients = orderData.ingredients
   const location = useLocation()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const ingredientsList = orderData.ingredients.map(item => {
     const ingredient = ingredients.find(
-      (element) => element._id === item
+      (element) => {
+        return element._id === item
+      }
     )
     return ingredient
   })
@@ -20,28 +23,37 @@ export const FeedItem = ({ orderData }) => {
   const ingredientsListLength = ingredientsList.length
 
   const handleFeedOrderClick = (order) => {
-    // dispatch(popupFeedOrder(order))
-    // dispatch(togglePopupFeedOrder(true))
+    navigate(`/feed/${_id}`, {state: { background: location}})
     return;
   }
+
+  const today = new Date()
+  const date = new Date(createdAt)
+
+  const orderPrice = ingredientsList.reduce((prev, ingredient) => {
+    if (ingredient.type === 'bun') {
+      return prev + ingredient.price * 2
+    }
+    return prev + ingredient.price
+  }, 0)
 
   return (
     <Link 
     onClick={() => handleFeedOrderClick(orderData)}
-    to={`/profile/orders/${_id}`}
+    to={`/feed/${_id}`}
     state={{background: location}}
     key={_id}   
     className={feedItemStyles.link}
     >
       <div className={feedItemStyles.top}>
-        <p className="text text_type_digits-default">{number}</p>
-        <time className="text text_type_main-default text_color_inactive">
-          Сегодня, 16:20 i-GMT+3
-        </time>
+        <p className="text text_type_digits-default">{`#${number}`}</p>
+        <div className="text text_type_main-default text_color_inactive">
+        <FormattedDate date={date}/>
+        </div>
       </div>
       <div className={feedItemStyles.name}>
         <h2 className="text text_type_main-medium">
-          Death Star Starship Main бургер
+          {name}
         </h2>
       </div>
       <div className={feedItemStyles.bottom}>
@@ -57,14 +69,20 @@ export const FeedItem = ({ orderData }) => {
                 );
               }
               if (ingredientsListLength > 6) {
-                return 
+                return (
+                  <li className={feedItemStyles.shape} key={id}>
+                    <div className={feedItemStyles.black_circle}>
+                      {ingredient && <img className={feedItemStyles.image} src={ingredient?.image} alt={ingredient?.name}></img>}
+                    </div>
+                  </li>
+
+                ) 
               }
             }).reverse()
-          
           }
         </ul>
         <div className={feedItemStyles.count}>
-          <span className="text text_type_digits-default">480</span>
+          <span className="text text_type_digits-default">{orderPrice}</span>
           <CurrencyIcon type="primary" />
         </div>
       </div>

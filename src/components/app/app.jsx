@@ -51,8 +51,9 @@ import {
 const App = () => {
   const dispatch = useDispatch()
   const location = useLocation()
+  console.log("🚀 ~ file: app.jsx:54 ~ App ~ location:", location)
   const background = location.state && location.state.background
-  const navigate = useNavigate()
+  const navigate = useNavigate()  
 
   const isModalOrderOpen = useSelector(store => store.popupReducer.popupOrderOpen)
   const ingredientsFailed = useSelector(state => state.ingredientsReducer.getIngredientsFailed)
@@ -65,6 +66,10 @@ const App = () => {
     dispatch(togglePopupIngredient(false))
     dispatch(popupDeleteIngredient())
     navigate(-1)
+  }
+
+  const closeOrderPreviewModal = () => {
+    navigate('/feed')
   }
 
   useEffect(() => {
@@ -89,7 +94,7 @@ const App = () => {
       <div className={appStyles.app}>
         <AppHeader />
         <Routes location={background || location}>
-          <Route path={mainPath} element={<Home />}/>
+          <Route path={mainPath} element={<Home/>}/>
           <Route path={loginPath} element={<ProtectedRouteElement element={<Login />} onlyUnAuth={true} />} />
           <Route path={registerPath} element={<ProtectedRouteElement element={<Register />} onlyUnAuth={true} />} />
           <Route path={forgotPasswordPath} element={<ProtectedRouteElement element={<ForgotPassword />} onlyUnAuth={true} />} />
@@ -108,6 +113,13 @@ const App = () => {
               element={
                 <Modal handleClose={closeIngredientModal} title='Детали ингредиента' >
                   <IngredientDetails />
+                </Modal>
+              }
+            />
+            <Route path={feedIdPath}
+              element={
+                <Modal handleClose={closeOrderPreviewModal}>
+                  <FeedOrderPreview />
                 </Modal>
               }
             />

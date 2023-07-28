@@ -45,7 +45,7 @@
   background-image: linear-gradient(to top right, #A41AB2, #4C4CFF);
   border-radius: 50%;
   box-sizing: border-box;
-  z-index: 99;
+  z-index: 1;
 }
 
 .shape:last-child {
