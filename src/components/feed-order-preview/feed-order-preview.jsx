@@ -1,37 +1,33 @@
 import FeedOrderPreviewStyles from './feed-order-preview.module.css'
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Loader } from '../loader/loader';
-import { useMemo } from 'react';
 
 export const FeedOrderPreview = () => {
   const { id } = useParams()
   const orders = useSelector(store => store.wsReducer.ordersData)
-  
   const {ingredients} = useSelector(store => store.ingredientsReducer);
+  
   const order = orders?.orders?.find(
     (item) => {
       return item._id === id
     }
   )
-  
+
   const ingredientsList = order?.ingredients?.map(item => {
     const ingredient = ingredients.find(
       (element) => {
         return element._id === item
       }
-    )
+    )    
     return ingredient
   })
 
-  const orderTotalPrice = ingredientsList?.reduce((prev, ingredient) => {
-    if (ingredient.type === 'bun') {
-      return prev + ingredient.price * 2
-    }
-    return prev + ingredient.price
-  }, 0)
+  const uniqueIngredients = Array.from(new Set(ingredientsList));
 
+  const count = ingredientsList?.reduce((prev, ingredient) => prev + ingredient.price , 0)
+  
   const date = new Date(order?.createdAt)
 
   return (
@@ -43,9 +39,7 @@ export const FeedOrderPreview = () => {
         <span className={`text text_type_main-default mt-2 mb-15 ${FeedOrderPreviewStyles.status}`}>{order.status === 'done' ? 'Выполнен' : 'В работе'}</span>
         <p className='text text_type_main-medium mb-6'>Состав:</p>
         <ul className={FeedOrderPreviewStyles.ingredients_list}>
-          {ingredientsList.map(item => {
-          let count = 0;
-          
+          {uniqueIngredients?.map(item => {    
           return (
               <li className={FeedOrderPreviewStyles.ingredient_item} key={item._id}>
                 <div className={FeedOrderPreviewStyles.ingredient_name_img}>
@@ -57,7 +51,9 @@ export const FeedOrderPreview = () => {
                   <p className='text text_type_main-default'>{item.name}</p>
                 </div>
                 <div className={`${FeedOrderPreviewStyles.count_box}`}>
-                  <span className={`${FeedOrderPreviewStyles.count} text text_type_digits-default`}>{`${count} x ${item.price}`}</span>
+                  <span className={`${FeedOrderPreviewStyles.count} text text_type_digits-default`}>{
+                    ingredientsList?.filter(element => element._id === item._id).length
+                  }{` x ${item.price}`}</span>
                   <CurrencyIcon/>
                 </div>
               </li>
@@ -70,7 +66,7 @@ export const FeedOrderPreview = () => {
             <FormattedDate date={date}/>
           </div>
           <div className={FeedOrderPreviewStyles.total}>
-            <span className={`text text_type_digits-default`}>{orderTotalPrice}</span>
+            <span className={`text text_type_digits-default`}>{count}</span>
             <CurrencyIcon/>
           </div>
         </div>

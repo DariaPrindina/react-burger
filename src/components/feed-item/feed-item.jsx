@@ -19,7 +19,7 @@ export const FeedItem = ({ orderData }) => {
     )
     return ingredient
   })
-
+  
   const ingredientsListLength = ingredientsList.length
 
   const handleFeedOrderClick = (order) => {
@@ -27,18 +27,23 @@ export const FeedItem = ({ orderData }) => {
     return;
   }
 
-  const today = new Date()
   const date = new Date(createdAt)
 
-  const orderPrice = ingredientsList.reduce((prev, ingredient) => {
-    if (ingredient.type === 'bun') {
-      return prev + ingredient.price * 2
-    }
-    return prev + ingredient.price
-  }, 0)
+  const buns = ingredientsList.filter(item => item.type === 'bun')
+  const oth = ingredientsList.filter(item => item.type !== 'bun')
+  
+  const orderPrice = () => {
+    const otherIngr = oth?.reduce((prev, ingredient) => {
+        return prev + ingredient.price
+    }, 0)
+    const bunsPrice = buns.map(bun => bun.price)[0]
+      return otherIngr + (bunsPrice * 2)
+  }
 
   return (
-    <Link 
+    ingredientsListLength > 2 &&
+    buns.length === 2 &&
+      <Link 
     onClick={() => handleFeedOrderClick(orderData)}
     to={`/feed/${_id}`}
     state={{background: location}}
@@ -82,7 +87,7 @@ export const FeedItem = ({ orderData }) => {
           }
         </ul>
         <div className={feedItemStyles.count}>
-          <span className="text text_type_digits-default">{orderPrice}</span>
+          <span className="text text_type_digits-default">{orderPrice()}</span>
           <CurrencyIcon type="primary" />
         </div>
       </div>

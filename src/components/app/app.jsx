@@ -51,7 +51,6 @@ import {
 const App = () => {
   const dispatch = useDispatch()
   const location = useLocation()
-  console.log("🚀 ~ file: app.jsx:54 ~ App ~ location:", location)
   const background = location.state && location.state.background
   const navigate = useNavigate()  
 

@@ -11,8 +11,8 @@ export const Feed = () => {
 
   const {ordersData} = useSelector(store => store.wsReducer)
   const orders = ordersData?.orders
-  const totalOrders = ordersData ? ordersData.total : 0
-  const totalOrdersToday = ordersData ? ordersData.totalToday : 0
+  const totalOrders = ordersData?.total
+  const totalOrdersToday = ordersData?.totalToday
   
   useEffect(() => {
     dispatch(wsConnectionStart())
@@ -76,11 +76,17 @@ export const Feed = () => {
             </li>
             <li className={feedStyles.count_li}>
               <h2 className='text text_type_main-medium'>Выполнено за все время:</h2>
-              <span className={`${feedStyles.shadow} text text_type_digits-large`}>{totalOrders}</span>
+              {orders 
+                ? <span className={`${feedStyles.shadow} text text_type_digits-large`}>{totalOrders}</span>
+                : <Loader/>
+              }
             </li>
             <li className={feedStyles.count_li}>
               <h2 className='text text_type_main-medium'>Выполнено за сегодня:</h2>
-              <span className={`${feedStyles.shadow} text text_type_digits-large`}>{totalOrdersToday}</span>
+              {orders 
+                ? <span className={`${feedStyles.shadow} text text_type_digits-large`}>{totalOrdersToday}</span>
+                : <Loader/>
+              }
             </li>
           </ul>
         </section>
