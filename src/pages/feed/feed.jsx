@@ -28,6 +28,9 @@ export const Feed = () => {
     }
   }, [dispatch])
 
+  const doneOrders = orders?.filter(item => item.status === 'done')
+  const inWorkOrders = orders?.filter(item => item.status !== 'done')
+
   return (
     <div className={feedStyles.page}>
       <h1 className='mt-10 mb-5 text text_type_main-large'>
@@ -59,15 +62,14 @@ export const Feed = () => {
               <div className={feedStyles.ready_orders}>
                 <h2 className='text text_type_main-medium mb-6'>Готовы:</h2>
                 <ul className={feedStyles.numbers_ready}>
-                  {orders
-                    ? orders.map(item => {
-                      if(item.status === "done") {
+                  {doneOrders
+                    ? doneOrders.map(item => {
                         return (
                           <li key={item._id}> 
                             <span className='text text_type_digits-default'>{item.number}</span>
                           </li>
                         )
-                      }}
+                      }
                       )
                     : <Loader/>
                   }
@@ -76,15 +78,14 @@ export const Feed = () => {
               <div className={feedStyles.in_work_orders}>
                 <h2 className='text text_type_main-medium mb-6'> В работе:</h2>
                 <ul className={feedStyles.numbers_in_work}>
-                  {orders 
-                    ? orders.map(item => {
-                    if(item.status !== "done") {
+                  {inWorkOrders 
+                    ? inWorkOrders.map(item => {
                       return (
                         <li key={item._id}> 
                           <span className='text text_type_digits-default'>{item.number}</span>
                         </li>
                       )
-                    }})
+                    })
                     : <Loader/>
                   }
                 </ul>

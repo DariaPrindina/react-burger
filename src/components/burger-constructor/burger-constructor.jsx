@@ -48,8 +48,10 @@ const BurgerConstructor = () => {
     })
   })
   
-  const idIngredients = ingredients?.map((ingredient) => ingredient?._id).concat(bunConstructor?._id, bunConstructor?._id)
-
+  const idIngredients = ingredients?.map((ingredient) => ingredient?._id)
+  idIngredients.push(bunConstructor?._id)
+  idIngredients.unshift(bunConstructor?._id)
+  
   const submitOrder = () => {
     dispatch(orderPost(idIngredients))
     dispatch(togglePopupOrder(true))
@@ -132,7 +134,7 @@ const BurgerConstructor = () => {
             type="primary" 
             size="large" 
             onClick={authentification ? submitOrder : redirectToLogin}
-            disabled={ingredients.length > 0 ? false : true}
+            disabled={bunConstructor ? false : true}
           >
             Оформить заказ
           </Button>

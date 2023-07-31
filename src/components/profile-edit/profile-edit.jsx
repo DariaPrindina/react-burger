@@ -3,16 +3,16 @@ import { useForm } from '../../components/hooks/useForm';
 import { setUser } from '../../services/actions/user';
 import { EmailInput, Input, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile-edit.module.css'
+import { Loader } from "../loader/loader";
 
 export const ProfileEdit = () => {
   const dispatch = useDispatch()
 
   const {user} = useSelector(store => store.userReducer)
-  const {authentification} = useSelector(store => store.userReducer)
 
   const {values, handleChange, setValues} = useForm({
-    name: authentification ? user.name : '',
-    email: authentification ? user.email : '',
+    name: user?.name,
+    email: user?.email,
     password: ''
   })
 
@@ -24,12 +24,12 @@ export const ProfileEdit = () => {
 
   const undoChanges = (evt) => {
     evt.preventDefault()
-    setValues({...values, name: user?.name})
-    setValues({...values, email: user?.email})
-    setValues({...values, password: ''})
+    setValues({...values, name: user?.name, email: user?.email, password: ''})
   }
 
   return (
+    user
+    ?
     <form onSubmit={submitFormUpdateUser} className={`${styles.form} mt-30`}>
       <Input
         type={'text'}
@@ -44,7 +44,7 @@ export const ProfileEdit = () => {
         icon={'EditIcon'}
       />
       <EmailInput
-        name={'login'}
+        name={'email'}
         extraClass='mb-6'
         value={values.email}
         error={false}
@@ -64,22 +64,29 @@ export const ProfileEdit = () => {
         size={'default'}
       />
       <div className={styles.buttons}>
-        <Button 
-          htmlType="submit"
-          type="primary" 
-          size="small" 
-        >
-          Сохранить
-        </Button>
-        <Button 
-          htmlType="button" 
-          type="primary" 
-          size="small" 
-          onClick={undoChanges}
-        >
-          Oтмена
-        </Button>
+        { values.name !== user.name || values.email !== user.email || values.password !== ''
+        ?
+        <>
+          <Button 
+            htmlType="submit"
+            type="primary" 
+            size="small" 
+          >
+            Сохранить
+          </Button>
+          <Button 
+            htmlType="button" 
+            type="primary" 
+            size="small" 
+            onClick={undoChanges}
+          >
+            Oтмена
+          </Button>
+        </>
+        : <></>
+        }
       </div>
     </form> 
+    : <Loader/>
   )
 }

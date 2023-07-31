@@ -48,6 +48,8 @@ import {
   feedIdPath,
   profileOrdersIdPath
 } from '../../utils/rootes'
+import { wsConnectionClosed } from '../../services/actions/ws-actions';
+import { wsConnectionClosedAuth } from '../../services/actions/ws-actions-auth';
 
 const App = () => {
   const dispatch = useDispatch()
@@ -70,18 +72,16 @@ const App = () => {
 
   const closeOrderPreviewModal = () => {
     navigate('/feed')
+    dispatch(wsConnectionClosed())
   }
 
   const closeProfileOrderPreviewModal = () => {
     navigate('/profile/orders')
+    dispatch(wsConnectionClosedAuth())
   }
 
   useEffect(() => {
     dispatch(getIngredients())
-  }, [dispatch])
-
-  useEffect(() => {
-    dispatch(getUser())
   }, [dispatch])
 
   if (ingredientsFailed) {
@@ -104,17 +104,19 @@ const App = () => {
           <Route path={forgotPasswordPath} element={<ProtectedRouteElement element={<ForgotPassword />} onlyUnAuth={true} />} />
           <Route path={resetPasswordPath} element={<ProtectedRouteElement element={<ResetPassword />} onlyUnAuth={true} />} />
           <Route path={notFoundPath} element={<NotFound />}/>
+          
           <Route path='/profile/*' element={<ProtectedRouteElement element={
           <Profile>
             <Route path="/profile" element={<ProfileEdit />} />
             <Route path="/orders" element={<ProfileOrders />} />
           </Profile>
           } onlyUnAuth={false} />} />
+          <Route path={profileOrdersIdPath} element={<ProtectedRouteElement element={<FeedOrderPreview />} onlyUnAuth={false} />} />
+
           <Route path={feedPath} element={<Feed />}/>
+          <Route path={feedIdPath} element={<FeedOrderPreview />}/>
 
           <Route path={ingredientsIdPath} element={<IngredientDetails title='Детали ингредиента'/>}/>
-          <Route path={feedIdPath} element={<FeedOrderPreview />}/>
-          <Route path={profileOrdersIdPath} element={<ProtectedRouteElement element={<FeedOrderPreview />} onlyUnAuth={false} />} />
           
         </Routes>
         

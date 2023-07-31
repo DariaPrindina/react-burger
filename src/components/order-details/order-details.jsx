@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import orderDone from '../../images/orderDone.svg'
 import orderDetailsStyles from './order-details.module.css'
 import PropTypes from 'prop-types';
-import { Timer } from '../timer/timer';
 
 const OrderDetails = () => {
   const order = useSelector(store => store.orderReducer);

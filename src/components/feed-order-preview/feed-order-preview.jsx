@@ -1,15 +1,11 @@
 import FeedOrderPreviewStyles from './feed-order-preview.module.css'
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import { useEffect } from 'react';
-import { wsConnectionStartAuth, wsConnectionClosedAuth } from '../../services/actions/ws-actions-auth'
-import { wsConnectionStart, wsConnectionClosed } from '../../services/actions/ws-actions'
 
 export const FeedOrderPreview = () => {
   const location = useLocation()
   const { id } = useParams()
-  const dispatch = useDispatch()
   const orders = useSelector(store => store.wsReducer.ordersData)
   const ordersAuth = useSelector(store => store.wsReducerAuth.ordersDataAuth)
   const {ingredients} = useSelector(store => store.ingredientsReducer);
@@ -38,22 +34,6 @@ export const FeedOrderPreview = () => {
   const count = ingredientsList?.reduce((prev, ingredient) => prev + ingredient.price , 0)
   
   const date = new Date(order?.createdAt)
-
-  useEffect(() => {
-    if (unauthUser){
-      dispatch(wsConnectionStart())
-    } else {
-      dispatch(wsConnectionStartAuth())
-    }
-
-    return () => {
-      if (unauthUser){
-        dispatch(wsConnectionClosed())
-      } else {
-        dispatch(wsConnectionClosedAuth())
-      }
-    }
-  }, [dispatch, unauthUser])
 
   return (
     order &&

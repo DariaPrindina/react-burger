@@ -14,21 +14,23 @@ export const FeedItem = ({ orderData, children }) => {
     )
     return ingredient
   })
-  
-  const ingredientsListLength = ingredientsList.length
 
   const date = new Date(createdAt)
 
-  const buns = ingredientsList.filter(item => item.type === 'bun')
-  const otherIngredients = ingredientsList.filter(item => item.type !== 'bun')
+  const buns = ingredientsList.filter(item => item !== undefined && item.type === 'bun')
+  const otherIngredients = ingredientsList.filter(item => item !== undefined && item.type !== 'bun')
   
   const orderPrice = () => {
     const otherIngredientsPrice = otherIngredients?.reduce((prev, ingredient) => {
         return prev + ingredient.price
     }, 0)
-    const bunsPrice = buns.map(bun => bun.price)[0]
-      return otherIngredientsPrice + (bunsPrice * 2)
+    const bunsPrice = buns?.reduce((prev, bun) => {
+        return prev + bun.price
+    }, 0)
+      return otherIngredientsPrice + (bunsPrice ? bunsPrice : 0)
   }
+
+  const ingredientsSliced = ingredientsList.slice(0, 6).toReversed()
 
   return (
     <div className={feedItemStyles.link}>
@@ -46,8 +48,8 @@ export const FeedItem = ({ orderData, children }) => {
       </div>
       <div className={feedItemStyles.bottom}>
         <ul className={feedItemStyles.images_container}>
-          {orderData && ingredientsList.slice(0, 6).map((ingredient, id) => {
-              if (ingredientsListLength) {
+          {orderData && ingredientsSliced.map((ingredient, id) => {
+              if (ingredientsList.length) {
                 return (
                   <li className={feedItemStyles.shape} key={id}>
                     <div className={feedItemStyles.black_circle}>
@@ -56,7 +58,7 @@ export const FeedItem = ({ orderData, children }) => {
                   </li>
                 );
               }
-            }).reverse()
+            })
           }
         </ul>
         <div className={feedItemStyles.count}>
