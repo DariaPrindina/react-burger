@@ -30,7 +30,7 @@ export const ProfileEdit = () => {
   }
 
   return (
-    <form onSubmit={submitFormUpdateUser} className={`${styles.form} ml-15 mt-30`}>
+    <form onSubmit={submitFormUpdateUser} className={`${styles.form} mt-30`}>
       <Input
         type={'text'}
         placeholder={'Имя'}

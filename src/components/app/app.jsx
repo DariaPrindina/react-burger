@@ -114,7 +114,7 @@ const App = () => {
 
           <Route path={ingredientsIdPath} element={<IngredientDetails title='Детали ингредиента'/>}/>
           <Route path={feedIdPath} element={<FeedOrderPreview />}/>
-          <Route path={profileOrdersIdPath} element={<FeedOrderPreview />}/>
+          <Route path={profileOrdersIdPath} element={<ProtectedRouteElement element={<FeedOrderPreview />} onlyUnAuth={false} />} />
           
         </Routes>
         
