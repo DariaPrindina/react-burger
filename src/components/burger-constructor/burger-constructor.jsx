@@ -48,7 +48,7 @@ const BurgerConstructor = () => {
     })
   })
   
-  const idIngredients = ingredients?.map((ingredient) => ingredient?._id).concat(bunConstructor?._id)
+  const idIngredients = ingredients?.map((ingredient) => ingredient?._id).concat(bunConstructor?._id, bunConstructor?._id)
 
   const submitOrder = () => {
     dispatch(orderPost(idIngredients))

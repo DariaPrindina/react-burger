@@ -87,7 +87,7 @@ export const fetchWithRefresh = async (url, options) => {
     const res = await fetch(url, options);
     return await checkResponse(res);
   } catch (err) {
-    if (err.message === "jwt expired") {
+    if (err.message === "jwt expired" || 'invalid token') {
       const refreshData = await postUserRefreshToken(); 
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       localStorage.setItem("accessToken", refreshData.accessToken);

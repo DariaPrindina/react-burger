@@ -36,7 +36,7 @@ function AppHeader(){
           <Logo />
         </div>
         <NavLink 
-          to='/profile' 
+          to='/profile/*' 
           className={
             ({ isActive }) =>
               isActive 

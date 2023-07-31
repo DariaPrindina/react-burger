@@ -1,6 +1,7 @@
 .modal {
   display: flex;
   justify-content: center;
+  margin: auto;
   flex-direction: column;
   width: 640px;
   position: relative;

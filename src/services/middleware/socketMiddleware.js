@@ -1,4 +1,4 @@
-export const socketMiddleware = (wsUrl, wsActions) => {
+export const socketMiddleware = (wsUrl, wsActions, auth = false) => {
   return store => {
     let socket = null;
 
@@ -6,9 +6,16 @@ export const socketMiddleware = (wsUrl, wsActions) => {
       const { dispatch } = store;
       const { type, payload } = action;
       const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
+      const accessToken = localStorage.getItem('accessToken')
+
       if (type === wsInit) {
-        socket = new WebSocket(wsUrl);
+        if (auth) {
+          socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
+        } else {
+          socket = new WebSocket(wsUrl);
+        }
       }
+      
       if (socket) {
         socket.onopen = event => {
           dispatch({ type: onOpen, payload: event });

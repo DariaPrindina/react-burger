@@ -1,15 +1,24 @@
 import FeedOrderPreviewStyles from './feed-order-preview.module.css'
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { Loader } from '../loader/loader';
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
+import { useEffect } from 'react';
+import { wsConnectionStartAuth, wsConnectionClosedAuth } from '../../services/actions/ws-actions-auth'
+import { wsConnectionStart, wsConnectionClosed } from '../../services/actions/ws-actions'
 
 export const FeedOrderPreview = () => {
+  const location = useLocation()
   const { id } = useParams()
+  const dispatch = useDispatch()
   const orders = useSelector(store => store.wsReducer.ordersData)
+  const ordersAuth = useSelector(store => store.wsReducerAuth.ordersDataAuth)
   const {ingredients} = useSelector(store => store.ingredientsReducer);
-  
-  const order = orders?.orders?.find(
+   
+  const unauthUser = location.pathname.includes('feed')
+
+  let ordersType = unauthUser ? orders : ordersAuth 
+
+  const order = ordersType?.orders?.find(
     (item) => {
       return item._id === id
     }
@@ -30,9 +39,24 @@ export const FeedOrderPreview = () => {
   
   const date = new Date(order?.createdAt)
 
+  useEffect(() => {
+    if (unauthUser){
+      dispatch(wsConnectionStart())
+    } else {
+      dispatch(wsConnectionStartAuth())
+    }
+
+    return () => {
+      if (unauthUser){
+        dispatch(wsConnectionClosed())
+      } else {
+        dispatch(wsConnectionClosedAuth())
+      }
+    }
+  }, [dispatch, unauthUser])
+
   return (
-    order 
-    ?
+    order &&
       <div className={FeedOrderPreviewStyles.modal}>
         <p className={`text text_type_digits-default mt-10 mb-5 ${FeedOrderPreviewStyles.number}`}>{`#${order.number}`}</p>
         <p className={`text text_type_main-medium`}>{order.name}</p>
@@ -71,7 +95,6 @@ export const FeedOrderPreview = () => {
           </div>
         </div>
       </div>
-    : <Loader />
   );
 };
 

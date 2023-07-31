@@ -20,6 +20,9 @@ import {
   Feed 
 } from '../../pages';
 
+import { ProfileEdit } from '../profile-edit/profile-edit';
+import { ProfileOrders } from '../profile-orders/profile-orders';
+
 import { getUser } from '../../services/actions/user';
 import { getIngredients } from '../../services/actions/ingredients';
 import { ProtectedRouteElement } from '../protected-route-element/protected-route-element';
@@ -40,11 +43,9 @@ import {
   forgotPasswordPath,
   resetPasswordPath,
   notFoundPath,
-  profilePath,
   ingredientsIdPath,
   feedPath,
   feedIdPath,
-  profileOrdersPath,
   profileOrdersIdPath
 } from '../../utils/rootes'
 
@@ -69,6 +70,10 @@ const App = () => {
 
   const closeOrderPreviewModal = () => {
     navigate('/feed')
+  }
+
+  const closeProfileOrderPreviewModal = () => {
+    navigate('/profile/orders')
   }
 
   useEffect(() => {
@@ -99,11 +104,18 @@ const App = () => {
           <Route path={forgotPasswordPath} element={<ProtectedRouteElement element={<ForgotPassword />} onlyUnAuth={true} />} />
           <Route path={resetPasswordPath} element={<ProtectedRouteElement element={<ResetPassword />} onlyUnAuth={true} />} />
           <Route path={notFoundPath} element={<NotFound />}/>
-          <Route path={profilePath} element={<ProtectedRouteElement element={<Profile />} onlyUnAuth={false} />}/>
+          <Route path='/profile/*' element={<ProtectedRouteElement element={
+          <Profile>
+            <Route path="/profile" element={<ProfileEdit />} />
+            <Route path="/orders" element={<ProfileOrders />} />
+          </Profile>
+          } onlyUnAuth={false} />} />
+          <Route path={feedPath} element={<Feed />}/>
+
           <Route path={ingredientsIdPath} element={<IngredientDetails title='Детали ингредиента'/>}/>
           <Route path={feedIdPath} element={<FeedOrderPreview />}/>
-          <Route path={feedPath} element={<Feed />}/>
-          <Route path={profileOrdersPath} element={<NotFound />}/>
+          <Route path={profileOrdersIdPath} element={<FeedOrderPreview />}/>
+          
         </Routes>
         
         {background && (
@@ -118,6 +130,13 @@ const App = () => {
             <Route path={feedIdPath}
               element={
                 <Modal handleClose={closeOrderPreviewModal}>
+                  <FeedOrderPreview />
+                </Modal>
+              }
+            />
+            <Route path={profileOrdersIdPath}
+              element={
+                <Modal handleClose={closeProfileOrderPreviewModal}>
                   <FeedOrderPreview />
                 </Modal>
               }

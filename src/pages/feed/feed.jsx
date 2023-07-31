@@ -1,18 +1,25 @@
 import feedStyles from './feed.module.css'
-import {ConstructorElement, CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import { FeedItem } from '../../components/feed-item/feed-item';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { wsConnectionStart, wsConnectionClosed } from '../../services/actions/ws-actions'
 import { Loader } from '../../components/loader/loader';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export const Feed = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const {ordersData} = useSelector(store => store.wsReducer)
   const orders = ordersData?.orders
   const totalOrders = ordersData?.total
   const totalOrdersToday = ordersData?.totalToday
+
+  const handleFeedOrderClick = (order) => {
+    navigate(`/feed/${order._id}`, {state: { background: location}})
+    return;
+  }
   
   useEffect(() => {
     dispatch(wsConnectionStart())
@@ -31,9 +38,18 @@ export const Feed = () => {
           {orders
             ? orders.map(order => {
                 return (
-                  <FeedItem orderData={order} key={order._id}/>
-                )}
-              )
+                  order?.ingredients.length >= 3 &&
+                    <Link 
+                      onClick={() => handleFeedOrderClick(order)}
+                      to={`${order._id}`}
+                      state={{background: location}}
+                      key={order.number}   
+                      className={feedStyles.link}
+                    >
+                      <FeedItem orderData={order} key={order._id}/>
+                    </Link>
+                )
+              })
             : <Loader/>
           }
         </section>

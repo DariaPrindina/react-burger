@@ -1,11 +1,15 @@
 .container {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 320px 872px;
+  gap: 40px;
+  max-width: 1232px;
+  margin: auto;
 }
 
 .nav_container {
-  max-width: 480px;
-  position: relative;
+  max-width: 320px;
+  display: flex;
+  flex-direction: row;
 }
 
 .nav {
@@ -14,9 +18,7 @@
 }
 
 .container_section {
-  position: absolute;
   max-width: 320px;
-  right: 540px;
 }
 
 .link {
@@ -25,14 +27,6 @@
   text-decoration: none;
   width: 320px;
   height: 64px;
-}
-
-.form {
-  display: block;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-width: 480px;
 }
 
 .link_active {
@@ -48,10 +42,4 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
-}
-
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
 }

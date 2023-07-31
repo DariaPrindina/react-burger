@@ -1,0 +1,13 @@
+.form {
+  display: block;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 480px;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}

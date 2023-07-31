@@ -28,9 +28,9 @@ export const wsConnectionClosed = () => {
   };
 };
 
-export const wsGetOrders = order => {
+export const wsGetOrders = ordersData => {
   return {
     type: WS_GET_ORDERS,
-    payload: order
+    payload: ordersData
   };
 };

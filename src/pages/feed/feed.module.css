@@ -9,6 +9,11 @@
   gap: 60px;
 }
 
+.link {
+  text-decoration: none;
+  max-width: 584px;
+}
+
 .items {
   padding: 0;
   display: flex;
