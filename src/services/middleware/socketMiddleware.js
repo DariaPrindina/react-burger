@@ -16,7 +16,7 @@ export const socketMiddleware = (wsUrl, wsActions, auth = false) => {
         }
       }
 
-      if (type === onClose) {
+      if (socket && type === onClose) {
         socket.close(1000, 'CLOSE_NORMAL')
       }
       

@@ -8,6 +8,7 @@ import { wsConnectionClosed, wsConnectionStart } from '../../services/actions/ws
 
 export const FeedOrderPreview = () => {
   const location = useLocation()
+  const background = location.state && location.state.background
   const dispatch = useDispatch()
   const { id } = useParams()
   const orders = useSelector(store => store.wsReducer.ordersData)
@@ -23,7 +24,6 @@ export const FeedOrderPreview = () => {
       return item._id === id
     }
   )
-  console.log("🚀 ~ file: feed-order-preview.jsx:26 ~ FeedOrderPreview ~ order:", order)
 
   const ingredientsList = order?.ingredients?.map(item => {
     const ingredient = ingredients.find(
@@ -41,23 +41,26 @@ export const FeedOrderPreview = () => {
   const date = new Date(order?.createdAt)
 
   useEffect(() => {
-    if(!order || order === undefined){
-      if(unauthUser) {
-        dispatch(wsConnectionStart())
-      }
-      if(!unauthUser) {
+    if(!order && !unauthUser && !background){
         dispatch(wsConnectionStartAuth())
+    }
+    return () => {
+      if(!unauthUser) {
+        dispatch(wsConnectionClosedAuth())
       }
+    }
+  }, [dispatch, order, unauthUser, background])
+
+  useEffect(() => {
+    if(!order && unauthUser && !background) {
+      dispatch(wsConnectionStart())
     }
     return () => {
       if(unauthUser) {
         dispatch(wsConnectionClosed())
       }
-      if(!unauthUser) {
-        dispatch(wsConnectionClosedAuth())
-      }
     }
-  }, [dispatch, order, unauthUser])
+  }, [dispatch, order, unauthUser, background])
 
   return (
     order &&
