@@ -4,7 +4,7 @@ export const socketMiddleware = (wsUrl, wsActions, auth = false) => {
 
     return next => action => {
       const { dispatch } = store;
-      const { type, payload } = action;
+      const { type } = action;
       const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
       const accessToken = localStorage.getItem('accessToken')
 

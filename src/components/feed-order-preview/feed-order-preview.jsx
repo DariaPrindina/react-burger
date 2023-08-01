@@ -1,15 +1,19 @@
 import FeedOrderPreviewStyles from './feed-order-preview.module.css'
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
+import { wsConnectionClosedAuth, wsConnectionStartAuth } from '../../services/actions/ws-actions-auth';
+import { wsConnectionClosed, wsConnectionStart } from '../../services/actions/ws-actions';
 
 export const FeedOrderPreview = () => {
   const location = useLocation()
+  const dispatch = useDispatch()
   const { id } = useParams()
   const orders = useSelector(store => store.wsReducer.ordersData)
   const ordersAuth = useSelector(store => store.wsReducerAuth.ordersDataAuth)
   const {ingredients} = useSelector(store => store.ingredientsReducer);
-   
+  
   const unauthUser = location.pathname.includes('feed')
 
   let ordersType = unauthUser ? orders : ordersAuth 
@@ -19,6 +23,7 @@ export const FeedOrderPreview = () => {
       return item._id === id
     }
   )
+  console.log("🚀 ~ file: feed-order-preview.jsx:26 ~ FeedOrderPreview ~ order:", order)
 
   const ingredientsList = order?.ingredients?.map(item => {
     const ingredient = ingredients.find(
@@ -34,6 +39,25 @@ export const FeedOrderPreview = () => {
   const count = ingredientsList?.reduce((prev, ingredient) => prev + ingredient.price , 0)
   
   const date = new Date(order?.createdAt)
+
+  useEffect(() => {
+    if(!order || order === undefined){
+      if(unauthUser) {
+        dispatch(wsConnectionStart())
+      }
+      if(!unauthUser) {
+        dispatch(wsConnectionStartAuth())
+      }
+    }
+    return () => {
+      if(unauthUser) {
+        dispatch(wsConnectionClosed())
+      }
+      if(!unauthUser) {
+        dispatch(wsConnectionClosedAuth())
+      }
+    }
+  }, [dispatch, order, unauthUser])
 
   return (
     order &&

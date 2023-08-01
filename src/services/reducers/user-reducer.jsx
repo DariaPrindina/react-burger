@@ -82,7 +82,6 @@ export const userReducer = (state = initialState, action) => {
         passwordForgotRequest: true,
         passwordForgotSuccess: false,
         passwordForgotFailed: false,
-        isAuthChecked: true,
       }
     }
     case PASSWORD_FORGOT_SUCCESS: {
@@ -91,7 +90,6 @@ export const userReducer = (state = initialState, action) => {
         passwordForgotRequest: false,
         passwordForgotSuccess: true,
         passwordForgotFailed: false,
-        isAuthChecked: false,
       }
     }
     case PASSWORD_FORGOT_FAILED: {
@@ -100,7 +98,6 @@ export const userReducer = (state = initialState, action) => {
         passwordForgotRequest: false,
         passwordForgotSuccess: false,
         passwordForgotFailed: true,
-        isAuthChecked: false,
       }
     }
     case PASSWORD_RESET_REQUEST: {
@@ -109,7 +106,6 @@ export const userReducer = (state = initialState, action) => {
         passwordResetRequest: true,
         passwordResetSuccess: false,
         passwordResetFailed: false,
-        isAuthChecked: true,
       }
     }
     case PASSWORD_RESET_SUCCESS: {
@@ -118,7 +114,6 @@ export const userReducer = (state = initialState, action) => {
         passwordResetRequest: false,
         passwordResetSuccess: true,
         passwordResetFailed: false,
-        isAuthChecked: false,
       }
     }
     case PASSWORD_RESET_FAILED: {
@@ -129,7 +124,6 @@ export const userReducer = (state = initialState, action) => {
         passwordResetFailed: true,
         sendTokenPasswordSuccess: action.success,
         sendTokenPasswordErrorMessage: action.message,
-        isAuthChecked: false,
       }
     }
     case USER_REGISTRATION_REQUEST: {
@@ -138,7 +132,6 @@ export const userReducer = (state = initialState, action) => {
         registrationUserRequest: true,
         registrationUserSuccess: false,
         registrationUserFailed: false,
-        isAuthChecked: true,
       }
     }
     case USER_REGISTRATION_SUCCESS: {
@@ -149,7 +142,7 @@ export const userReducer = (state = initialState, action) => {
         registrationUserFailed: false,
         token: action.payload,
         authentification: true,
-        isAuthChecked: false,
+        isAuthChecked: true,
       }
     }
     case USER_REGISTRATION_FAILED: {
@@ -158,7 +151,6 @@ export const userReducer = (state = initialState, action) => {
         registrationUserRequest: false,
         registrationUserSuccess: false,
         registrationUserFailed: true,
-        isAuthChecked: false,
       }
     }
     case USER_LOGIN_REQUEST: {
@@ -167,7 +159,6 @@ export const userReducer = (state = initialState, action) => {
         userLoginRequest: true,
         userLoginSuccess: false,
         userLoginFailed: false,
-        isAuthChecked: true,
       }
     }
     case USER_LOGIN_SUCCESS: {
@@ -179,7 +170,7 @@ export const userReducer = (state = initialState, action) => {
         token: action.token,
         user: action.payload,
         authentification: true,
-        isAuthChecked: false,
+        isAuthChecked: true,
       }
     }
     case USER_LOGIN_FAILED: {
@@ -188,7 +179,6 @@ export const userReducer = (state = initialState, action) => {
         userLoginRequest: false,
         userLoginSuccess: false,
         userLoginFailed: true,
-        isAuthChecked: false,
       }
     }
     case USER_LOGOUT_REQUEST: {
@@ -197,7 +187,6 @@ export const userReducer = (state = initialState, action) => {
         userLogoutRequest: true,
         userLogoutSuccess: false,
         userLogoutFailed: false,
-        isAuthChecked: true,
       }
     }
     case USER_LOGOUT_SUCCESS: {
@@ -218,7 +207,6 @@ export const userReducer = (state = initialState, action) => {
         userLogoutRequest: false,
         userLogoutSuccess: false,
         userLogoutFailed: true,
-        isAuthChecked: false,
       }
     }
     case REFRESH_TOKEN_REQUEST: {
@@ -227,7 +215,6 @@ export const userReducer = (state = initialState, action) => {
         refreshTokenRequest: true,
         refreshTokenSuccess: false,
         refreshTokenFailed: false,
-        isAuthChecked: true,
       }
     }
     case REFRESH_TOKEN_SUCCESS: {
@@ -238,7 +225,6 @@ export const userReducer = (state = initialState, action) => {
         refreshTokenFailed: false,
         token: action.payload,
         authentification: true,
-        isAuthChecked: false,
       }
     }
     case REFRESH_TOKEN_FAILED: {
@@ -248,7 +234,6 @@ export const userReducer = (state = initialState, action) => {
         refreshTokenSuccess: false,
         refreshTokenFailed: true,
         authentification: false,
-        isAuthChecked: false,
       }
     }
     case GET_USER_INFO_REQUEST: {
@@ -257,7 +242,6 @@ export const userReducer = (state = initialState, action) => {
         getUserInfoRequest: true,
         getUserInfoSuccess: false,
         getUserInfoFailed: false,
-        isAuthChecked: true,
       }
     }
     case GET_USER_INFO_SUCCESS: {
@@ -268,7 +252,7 @@ export const userReducer = (state = initialState, action) => {
         getUserInfoFailed: false,
         user: action.payload,
         authentification: true,
-        isAuthChecked: false,
+        isAuthChecked: true,
       }
     }
     case GET_USER_INFO_FAILED: {
@@ -278,7 +262,7 @@ export const userReducer = (state = initialState, action) => {
         getUserInfoSuccess: false,
         getUserInfoFailed: true,
         authentification: false,
-        isAuthChecked: false,
+        isAuthChecked: true,
       }
     }
     case SET_USER_INFO_REQUEST: {
@@ -287,7 +271,6 @@ export const userReducer = (state = initialState, action) => {
         setUserInfoRequest: true,
         setUserInfoSuccess: false,
         setUserInfoFailed: false,
-        isAuthChecked: true,
       }
     }
     case SET_USER_INFO_SUCCESS: {
@@ -297,7 +280,6 @@ export const userReducer = (state = initialState, action) => {
         setUserInfoSuccess: true,
         setUserInfoFailed: false,
         user: action.payload,
-        isAuthChecked: false,
       }
     }
     case SET_USER_INFO_FAILED: {
@@ -306,7 +288,6 @@ export const userReducer = (state = initialState, action) => {
         setUserInfoRequest: false,
         setUserInfoSuccess: false,
         setUserInfoFailed: true,
-        isAuthChecked: false,
       }
     }
     default: {

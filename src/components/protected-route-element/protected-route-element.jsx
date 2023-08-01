@@ -6,7 +6,7 @@ export const ProtectedRouteElement = ({ element, onlyUnAuth = false }) => {
   const location = useLocation()
   const {isAuthChecked, authentification} = useSelector(store => store.userReducer)
 
-  if (isAuthChecked) {
+  if (!isAuthChecked) {
     return <Loader/>
   }
 

@@ -84,6 +84,10 @@ const App = () => {
     dispatch(getIngredients())
   }, [dispatch])
 
+    useEffect(() => {
+    dispatch(getUser())
+  }, [dispatch])
+
   if (ingredientsFailed) {
     return (
       <div className={appStyles.error}>
@@ -107,8 +111,8 @@ const App = () => {
           
           <Route path='/profile/*' element={<ProtectedRouteElement element={
           <Profile>
-            <Route path="/profile" element={<ProfileEdit />} />
-            <Route path="/orders" element={<ProfileOrders />} />
+            <Route path="/profile/*" element={<ProfileEdit />} />
+            <Route path="/profile/orders" element={<ProfileOrders />} />
           </Profile>
           } onlyUnAuth={false} />} />
           <Route path={profileOrdersIdPath} element={<ProtectedRouteElement element={<FeedOrderPreview />} onlyUnAuth={false} />} />

@@ -3,8 +3,6 @@ import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import profileStyles from './profile.module.css'
 import { logoutUser } from '../../services/actions/user';
 import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { getUser } from '../../services/actions/user';
 import { ProfileEdit } from '../../components/profile-edit/profile-edit';
 
 import { ProfileOrders } from '../../components/profile-orders/profile-orders';
@@ -19,10 +17,6 @@ export const Profile = () => {
     dispatch(logoutUser())
     navigate('/', { replace: true })
   }
-
-  useEffect(() => {
-    dispatch(getUser())
-  }, [dispatch])
 
   return (
     <div className={profileStyles.container}>
@@ -45,7 +39,7 @@ export const Profile = () => {
               </li>
               <li>
                 <NavLink 
-                  to={`orders`}
+                  to={`/profile/orders`}
                   className={({ isActive }) =>
                     isActive 
                     ? `${profileStyles.link_active} text text_type_main-medium` 
