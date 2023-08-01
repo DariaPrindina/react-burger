@@ -70,6 +70,8 @@ const initialState = {
     email: '',
     password: '',
   },
+
+  isAuthChecked: false,
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -140,6 +142,7 @@ export const userReducer = (state = initialState, action) => {
         registrationUserFailed: false,
         token: action.payload,
         authentification: true,
+        isAuthChecked: true,
       }
     }
     case USER_REGISTRATION_FAILED: {
@@ -167,6 +170,7 @@ export const userReducer = (state = initialState, action) => {
         token: action.token,
         user: action.payload,
         authentification: true,
+        isAuthChecked: true,
       }
     }
     case USER_LOGIN_FAILED: {
@@ -194,6 +198,7 @@ export const userReducer = (state = initialState, action) => {
         token: null,
         user: null,
         authentification: false,
+        isAuthChecked: false,
       }
     }
     case USER_LOGOUT_FAILED: {
@@ -247,6 +252,7 @@ export const userReducer = (state = initialState, action) => {
         getUserInfoFailed: false,
         user: action.payload,
         authentification: true,
+        isAuthChecked: true,
       }
     }
     case GET_USER_INFO_FAILED: {
@@ -256,6 +262,7 @@ export const userReducer = (state = initialState, action) => {
         getUserInfoSuccess: false,
         getUserInfoFailed: true,
         authentification: false,
+        isAuthChecked: true,
       }
     }
     case SET_USER_INFO_REQUEST: {

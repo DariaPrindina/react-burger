@@ -11,7 +11,7 @@ const IngredientDetails = ({title}) => {
     <> 
       {ingredient && (
         <div className={ingredientDetailsStyles.modal}>
-          {title && <h2 className={`${ingredientDetailsStyles.title} text text_type_main-large mt-30`}>{title}</h2>}
+          {title}
           <img src={ingredient.image_large} alt={ingredient.name} />
           <p className={`text text_type_main-medium mt-4 mb-8 ${ingredientDetailsStyles.name}`}>{ingredient.name}</p>
           <ul className={ingredientDetailsStyles.inform_list}>

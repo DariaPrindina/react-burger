@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import { 
   Routes, 
   Route,
@@ -11,16 +9,19 @@ import {
 
 import appStyles from './app.module.css';
 import AppHeader from '../header/header'
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import { 
+  Home,
   Register, 
   Login, 
   ForgotPassword, 
   ResetPassword, 
   NotFound, 
-  Profile 
+  Profile,
+  Feed 
 } from '../../pages';
+
+import { ProfileEdit } from '../profile-edit/profile-edit';
+import { ProfileOrders } from '../profile-orders/profile-orders';
 
 import { getUser } from '../../services/actions/user';
 import { getIngredients } from '../../services/actions/ingredients';
@@ -33,6 +34,7 @@ import { togglePopupIngredient } from '../../services/actions/popup';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details'
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import FeedOrderPreview from '../feed-order-preview/feed-order-preview';
 
 import {
   mainPath,
@@ -41,15 +43,19 @@ import {
   forgotPasswordPath,
   resetPasswordPath,
   notFoundPath,
-  profilePath,
-  ingredientsIdPath
+  ingredientsIdPath,
+  feedPath,
+  feedIdPath,
+  profileOrdersIdPath
 } from '../../utils/rootes'
+import { wsConnectionClosed } from '../../services/actions/ws-actions';
+import { wsConnectionClosedAuth } from '../../services/actions/ws-actions-auth';
 
 const App = () => {
   const dispatch = useDispatch()
   const location = useLocation()
   const background = location.state && location.state.background
-  const navigate = useNavigate()
+  const navigate = useNavigate()  
 
   const isModalOrderOpen = useSelector(store => store.popupReducer.popupOrderOpen)
   const ingredientsFailed = useSelector(state => state.ingredientsReducer.getIngredientsFailed)
@@ -64,11 +70,21 @@ const App = () => {
     navigate(-1)
   }
 
+  const closeOrderPreviewModal = () => {
+    navigate('/feed')
+    dispatch(wsConnectionClosed())
+  }
+
+  const closeProfileOrderPreviewModal = () => {
+    navigate('/profile/orders')
+    dispatch(wsConnectionClosedAuth())
+  }
+
   useEffect(() => {
     dispatch(getIngredients())
   }, [dispatch])
 
-  useEffect(() => {
+    useEffect(() => {
     dispatch(getUser())
   }, [dispatch])
 
@@ -86,30 +102,26 @@ const App = () => {
       <div className={appStyles.app}>
         <AppHeader />
         <Routes location={background || location}>
-          <Route 
-            path={mainPath} 
-            exact
-            element={
-              <main className={appStyles.main}>
-                <DndProvider backend={HTML5Backend}>
-                  <BurgerIngredients />
-                  <BurgerConstructor />
-                </DndProvider>
-              </main>
-            } 
-          />
+          <Route path={mainPath} element={<Home/>}/>
           <Route path={loginPath} element={<ProtectedRouteElement element={<Login />} onlyUnAuth={true} />} />
           <Route path={registerPath} element={<ProtectedRouteElement element={<Register />} onlyUnAuth={true} />} />
           <Route path={forgotPasswordPath} element={<ProtectedRouteElement element={<ForgotPassword />} onlyUnAuth={true} />} />
           <Route path={resetPasswordPath} element={<ProtectedRouteElement element={<ResetPassword />} onlyUnAuth={true} />} />
           <Route path={notFoundPath} element={<NotFound />}/>
-          <Route path={profilePath} element={<ProtectedRouteElement element={<Profile />} onlyUnAuth={false} />}/>
-          <Route 
-            path={ingredientsIdPath}
-            element={
-                <IngredientDetails title='Детали ингредиента'/>
-            }
-          />
+          
+          <Route path='/profile/*' element={<ProtectedRouteElement element={
+          <Profile>
+            <Route path="/profile/*" element={<ProfileEdit />} />
+            <Route path="/profile/orders" element={<ProfileOrders />} />
+          </Profile>
+          } onlyUnAuth={false} />} />
+          <Route path={profileOrdersIdPath} element={<ProtectedRouteElement element={<FeedOrderPreview />} onlyUnAuth={false} />} />
+
+          <Route path={feedPath} element={<Feed />}/>
+          <Route path={feedIdPath} element={<FeedOrderPreview />}/>
+
+          <Route path={ingredientsIdPath} element={<IngredientDetails title='Детали ингредиента'/>}/>
+          
         </Routes>
         
         {background && (
@@ -118,6 +130,20 @@ const App = () => {
               element={
                 <Modal handleClose={closeIngredientModal} title='Детали ингредиента' >
                   <IngredientDetails />
+                </Modal>
+              }
+            />
+            <Route path={feedIdPath}
+              element={
+                <Modal handleClose={closeOrderPreviewModal}>
+                  <FeedOrderPreview />
+                </Modal>
+              }
+            />
+            <Route path={profileOrdersIdPath}
+              element={
+                <Modal handleClose={closeProfileOrderPreviewModal}>
+                  <FeedOrderPreview />
                 </Modal>
               }
             />
