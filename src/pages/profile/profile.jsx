@@ -1,37 +1,16 @@
-import { EmailInput, Input, Button} from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import profileStyles from './profile.module.css'
-import { logoutUser, setUser } from '../../services/actions/user';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { getUser } from '../../services/actions/user';
-import { useForm } from '../../components/hooks/useForm';
+import { logoutUser } from '../../services/actions/user';
+import { useDispatch } from 'react-redux';
+import { ProfileEdit } from '../../components/profile-edit/profile-edit';
+
+import { ProfileOrders } from '../../components/profile-orders/profile-orders';
 
 export const Profile = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
-  const {user} = useSelector(store => store.userReducer)
-  const {authentification} = useSelector(store => store.userReducer)
-
-  const {values, handleChange, setValues} = useForm({
-    name: authentification ? user.name : '',
-    email: authentification ? user.email : '',
-    password: ''
-  })
-
-  const submitFormUpdateUser = (evt) => {
-    evt.preventDefault()
-    dispatch(setUser(values.name, values.email, values.password))
-    setValues({...values, password: ''})
-  }
-
-  const undoChanges = (evt) => {
-    evt.preventDefault()
-    setValues({...values, name: user?.name})
-    setValues({...values, email: user?.email})
-    setValues({...values, password: ''})
-  }
+  const location = useLocation()
 
   const logout = (evt) => {
     evt.preventDefault()
@@ -39,31 +18,28 @@ export const Profile = () => {
     navigate('/', { replace: true })
   }
 
-  useEffect(() => {
-    dispatch(getUser())
-  }, [dispatch])
-
   return (
-    <div className={`${profileStyles.container} mt-30`}>
+    <div className={profileStyles.container}>
       <div className={profileStyles.nav_container}>
-        <div className={profileStyles.container_section}>
+        <div className={`${profileStyles.container_section} mt-30`}>
           <nav className={profileStyles.nav}>
             <ul className={profileStyles.ul}>
               <li>
                 <NavLink 
-                  to='/profile'
+                  to={`/profile/*`}
                   className={({ isActive }) =>
                     isActive 
                     ? `${profileStyles.link_active} text text_type_main-medium` 
                     : `${profileStyles.link} text text_type_main-medium text_color_inactive`
                   } 
+                  exact='true'
                 >
                   Профиль
                 </NavLink>
               </li>
               <li>
                 <NavLink 
-                  to='/profile/orders' 
+                  to={`/profile/orders`}
                   className={({ isActive }) =>
                     isActive 
                     ? `${profileStyles.link_active} text text_type_main-medium` 
@@ -90,58 +66,9 @@ export const Profile = () => {
           </nav>
           <p className={`text text_type_main-default text_color_inactive mt-20`}>В этом разделе вы можете изменить&nbsp;свои персональные данные</p>
         </div>
-        <form onSubmit={submitFormUpdateUser} className={profileStyles.form}>
-          <Input
-            type={'text'}
-            placeholder={'Имя'}
-            value={values.name}
-            name={'name'}
-            errorText={'Ошибка'}
-            error={false}
-            size={'default'}
-            extraClass="mb-6"
-            onChange={handleChange}
-            icon={'EditIcon'}
-          />
-          <EmailInput
-            name={'login'}
-            extraClass='mb-6'
-            value={values.email}
-            error={false}
-            icon={'EditIcon'}
-            onChange={handleChange}
-          >
-          </EmailInput>
-          <Input
-            name={'password'}
-            extraClass='mb-6'
-            errorText={'Ошибка'}
-            error={false}
-            value={values.password}
-            icon={'EditIcon'}
-            placeholder={'Пароль'}
-            onChange={handleChange}
-            size={'default'}
-          />
-          <div className={profileStyles.buttons}>
-            <Button 
-              htmlType="submit"
-              type="primary" 
-              size="small" 
-            >
-			  			Сохранить
-			  		</Button>
-            <Button 
-              htmlType="button" 
-              type="primary" 
-              size="small" 
-              onClick={undoChanges}
-            >
-			  			Oтмена
-			  		</Button>
-          </div>
-        </form>
       </div>
+        {location.pathname === '/profile/*' && <ProfileEdit/>}
+        {location.pathname === '/profile/orders' && <ProfileOrders/>}
     </div>
   )
 }

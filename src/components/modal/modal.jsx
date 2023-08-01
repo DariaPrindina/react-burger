@@ -24,12 +24,17 @@ const Modal = ({handleClose, title, children}) => {
       <ModalOverlay handleCloseByOverlay={handleClose} />
       <div className={modalStyles.modal}>
         <div className={modalStyles.container}>
-          <div className={`pl-10 pr-10 pt-10 ${modalStyles.header}`}>
-            <h2 className='text text_type_main-large'>{title}</h2>
-            <div className={modalStyles.closeIcon}>
-              <CloseIcon type="primary" onClick={handleClose} />
-            </div>
-          </div>
+            {title 
+              ? <div className={`${modalStyles.header} mt-10`}>
+                  <h2 className={`text text_type_main-large ${modalStyles.title}`}>{title}</h2>
+                  <div className={modalStyles.closeIconHeader}>
+                    <CloseIcon type="primary" onClick={handleClose} />
+                  </div>
+                </div>
+              : <div className={modalStyles.closeIcon}>
+                  <CloseIcon type="primary" onClick={handleClose} />
+                </div>
+            }
           {children}
         </div>
       </div>

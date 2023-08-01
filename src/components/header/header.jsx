@@ -20,7 +20,7 @@ function AppHeader(){
           <span className={`${headerStyles.span} ml-2`}>Конструктор</span>
         </NavLink>
         <NavLink 
-          to='/' 
+          to='/feed' 
           className={
             ({ isActive }) =>
               isActive 
@@ -36,7 +36,7 @@ function AppHeader(){
           <Logo />
         </div>
         <NavLink 
-          to='/profile' 
+          to='/profile/*' 
           className={
             ({ isActive }) =>
               isActive 

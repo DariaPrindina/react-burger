@@ -6,3 +6,7 @@ export const resetPasswordPath = "/reset-password";
 export const notFoundPath = "*";
 export const profilePath = "/profile";
 export const ingredientsIdPath = "/ingredients/:id";
+export const feedPath = "/feed";
+export const feedIdPath = "/feed/:id";
+export const profileOrdersPath = "/profile/orders";
+export const profileOrdersIdPath = "/profile/orders/:id";
