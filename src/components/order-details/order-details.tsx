@@ -5,7 +5,6 @@ import orderDetailsStyles from './order-details.module.css'
 
 const OrderDetails = () => {
   const order = useSelector(store => store.orderReducer.order);
-  console.log("🚀 ~ file: order-details.tsx:8 ~ OrderDetails ~ order:", order)
 
   return (
     <div className={orderDetailsStyles.content}>

@@ -14,9 +14,6 @@ export const Feed = () => {
 
   const {ordersData} = useSelector(store => store.wsReducer)
 
-  const stor = useSelector(store => store)
-  console.log("🚀 ~ file: feed.tsx:18 ~ Feed ~ stor:", stor)
-
   const orders = ordersData?.orders
   const totalOrders = ordersData?.total
   const totalOrdersToday = ordersData?.totalToday

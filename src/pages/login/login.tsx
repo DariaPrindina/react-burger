@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import loginStyles from './login.module.css'
 import { useDispatch } from '../../services/hooks';
 import { loginUser } from '../../services/actions/user';
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 
 export const Login = () => {
   const dispatch = useDispatch()
@@ -12,15 +12,15 @@ export const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   
-  const enterEmailValue = (evt: any): void => {
+  const enterEmailValue = (evt: ChangeEvent<HTMLInputElement>): void => {
     setEmail(evt.target.value)
   }
 
-  const enterPasswordValue = (evt: any): void => {
+  const enterPasswordValue = (evt: ChangeEvent<HTMLInputElement>): void => {
     setPassword(evt.target.value)
   }
 
-  const submitFormRegister = (evt: any): void => {
+  const submitFormRegister = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault()
     dispatch(loginUser(email, password))
     navigate('/', { replace: true })

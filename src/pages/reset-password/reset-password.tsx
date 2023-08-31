@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, FormEvent, ChangeEvent } from 'react'
 import { useDispatch } from '../../services/hooks';
 import { PasswordInput, Input, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
@@ -12,15 +12,15 @@ export const ResetPassword = () => {
   const [tokenPassword, setTokenPassword] = useState('')
   const dispatch = useDispatch()
   
-  const enterPasswordValue = (evt: any): void => {
+  const enterPasswordValue = (evt: ChangeEvent<HTMLInputElement>): void => {
     setPassword(evt.target.value)
   }
   
-  const enterCodeValue = (evt: any): void => {
+  const enterCodeValue = (evt: ChangeEvent<HTMLInputElement>): void => {
     setTokenPassword(evt.target.value)
   }
   
-  const submitFormResetPassword = (evt: any): void => {
+  const submitFormResetPassword = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault()
     dispatch(resetPassword(password, tokenPassword))
     navigate('/', { replace: true })

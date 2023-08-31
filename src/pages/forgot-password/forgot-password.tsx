@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FormEvent } from 'react'
 import { useDispatch } from '../../services/hooks'
 import { EmailInput, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,7 +14,7 @@ const {values, handleChange } = useForm({
   email: '',
 })
 
-const submitEmail = (evt: any): void => {
+const submitEmail = (evt: FormEvent<HTMLFormElement>): void => {
   evt.preventDefault()
   dispatch(forgotPassword(values.email))
   navigate('/reset-password', { replace: true })

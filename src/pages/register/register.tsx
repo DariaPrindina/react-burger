@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch } from '../../services/hooks';
 import {Input, EmailInput, PasswordInput, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
@@ -13,17 +13,17 @@ export const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   
-  const enterNameValue = (evt: any): void => {
+  const enterNameValue = (evt: ChangeEvent<HTMLInputElement>): void => {
     setName(evt.target.value)
   }
-  const enterEmailValue = (evt: any): void => {
+  const enterEmailValue = (evt: ChangeEvent<HTMLInputElement>): void => {
     setEmail(evt.target.value)
   }
-  const enterPasswordValue = (evt: any): void => {
+  const enterPasswordValue = (evt: ChangeEvent<HTMLInputElement>): void => {
     setPassword(evt.target.value)
   }
 
-  const submitFormRegister = (evt: any): void => {
+  const submitFormRegister = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault()
     dispatch(registrationUser(name, email, password))
     navigate('/login', {replace: true})

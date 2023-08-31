@@ -1,6 +1,6 @@
 import { useRef, FC } from 'react';
 import { useDrop, useDrag } from "react-dnd";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import dndIngredientStyles from './dnd-ingredient.module.css'
 import { DELETE_CONSTRUCTOR_INGREDIENT, REPLACE_CONSTRUCTOR_INGREDIENT } from '../../services/action-types/constructor-ingredients-types'

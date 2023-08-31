@@ -34,7 +34,7 @@ export const FeedOrderPreview = () => {
 
   const uniqueIngredients = Array.from(new Set(ingredientsList));
 
-  const count = ingredientsList?.reduce((prev: any, ingredient) => prev + ingredient?.price, 0)
+  const count = ingredientsList?.reduce((prev: number, ingredient) => prev + (ingredient ? ingredient?.price : 0), 0)
 
   useEffect(() => {
     if(!order && !unauthUser && !background){

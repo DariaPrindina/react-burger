@@ -1,21 +1,23 @@
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import feedItemStyles from "./feed-item.module.css";
 import { useSelector } from "../../services/hooks";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { TFeedItem } from "../../services/types/data";
 
 export const FeedItem: FC<TFeedItem> = ({ orderData, children }) => {
   const ingredients = useSelector(store => store.ingredientsReducer.ingredients);
   const {name, number, createdAt} = orderData
 
-  const ingredientsList = orderData.ingredients.map(item => {
-    const ingredient = ingredients.find(
-      (element: any) => {
-        return element._id === item
-      }
-    )
-    return ingredient
-  })
+  const ingredientsList = useMemo(() => {
+    return orderData.ingredients.map(item => {
+      const ingredient = ingredients.find(
+        (element: any) => {
+          return element._id === item
+        }
+      )
+      return ingredient
+    })
+  }, [orderData.ingredients, ingredients])
 
   const date = new Date(createdAt)
 

@@ -3,7 +3,7 @@ import { setUser } from '../../services/actions/user';
 import { EmailInput, Input, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './profile-edit.module.css'
 import { Loader } from "../loader/loader";
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 
 export const ProfileEdit = () => {
   const dispatch = useDispatch()
@@ -14,24 +14,23 @@ export const ProfileEdit = () => {
   const [email, setEmail] = useState(user?.email)
   const [password, setPassword] = useState('')
   
-  const enterNameValue = (evt: any): void => {
+  const enterNameValue = (evt: ChangeEvent<HTMLInputElement>): void => {
     setName(evt.target.value)
   }
-  const enterEmailValue = (evt: any): void => {
+  const enterEmailValue = (evt: ChangeEvent<HTMLInputElement>): void => {
     setEmail(evt.target.value)
   }
-  const enterPasswordValue = (evt: any): void => {
+  const enterPasswordValue = (evt: ChangeEvent<HTMLInputElement>): void => {
     setPassword(evt.target.value)
   }
 
-  const submitFormUpdateUser = (evt: any): void => {
+  const submitFormUpdateUser = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault()
     dispatch(setUser(name, email, password))
     setPassword('')
   }
 
-  const undoChanges = (evt: any): void => {
-    evt.preventDefault()
+  const undoChanges = () => {
     setName(user?.name)
     setEmail(user?.email)
     setPassword('')

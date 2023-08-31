@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import React, { useMemo, SyntheticEvent } from 'react'
 import { useDrop } from "react-dnd";
 import { useDispatch, useSelector } from '../../services/hooks';
 import {ConstructorElement, CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components';
@@ -54,7 +54,7 @@ const BurgerConstructor = () => {
     dispatch(togglePopupOrder(true))
   }
 
-  const redirectToLogin = (evt: any): void => {
+  const redirectToLogin = (evt: SyntheticEvent): void => {
     evt.preventDefault()
     navigate('/login', { replace: true })
   }

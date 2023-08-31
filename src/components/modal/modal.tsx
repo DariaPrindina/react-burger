@@ -9,7 +9,7 @@ const modalRoot = document.getElementById('react-modals') as Element
 
 const Modal: FC<TModal> = ({handleClose, title, children}) => {
   useEffect(() => {
-    const handleCloseByEsc = (evt: any): void => {
+    const handleCloseByEsc = (evt: {key: string}): void => {
       evt.key === 'Escape' && handleClose()
     }
     document.addEventListener('keydown', handleCloseByEsc)

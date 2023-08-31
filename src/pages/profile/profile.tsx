@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import profileStyles from './profile.module.css'
 import { logoutUser } from '../../services/actions/user';
-import { useDispatch, useSelector } from '../../services/hooks';
+import { useDispatch } from '../../services/hooks';
 import { ProfileEdit } from '../../components/profile-edit/profile-edit';
 import { ProfileOrders } from '../../components/profile-orders/profile-orders';
 
@@ -11,11 +11,7 @@ export const Profile = () => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const stor = useSelector(store => store)
-  console.log("🚀 ~ file: profile.tsx:15 ~ Profile ~ stor:", stor)
-
-  const logout = (evt: any): void => {
-    evt.preventDefault()
+  const logout = (): void => {
     dispatch(logoutUser())
     navigate('/', { replace: true })
   }
