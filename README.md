@@ -1,4 +1,4 @@
-# Учебный проект Stellar burger
+# Учебный проект Stellar burgers
 
 ![Лого stellar burger](./src/images/logo.svg)
 
