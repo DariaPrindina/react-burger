@@ -1,5 +1,5 @@
 # Учебный проект Stellar burger
----
+![Лого stellar burger](./src/images/logo.svg)
 Космическая бургерная с личным кабинетом и возможностью создавать бургер на любой вкус
 ---
 **Technologies && features:**
